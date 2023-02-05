@@ -1,4 +1,7 @@
 ---
+import "@fontsource/libre-baskerville";
+import Navbar from "../components/Navbar.astro";
+import ScrollAlert from "../components/ScrollAlert.astro";
 ---
 
 <html lang="en">
@@ -10,6 +13,12 @@
     <title>anthnydas.com</title>
   </head>
   <body>
-    <h1>anthnydas.com</h1>
+    <Navbar />
+    <div class="h-[100vh] w-full bg-orange-100">
+      <p class="pt-[50vh] text-amber-900 text-5xl text-center font-libre">
+        soon<span class="animate-pulse">.</span>
+      </p>
+    </div>
+    <ScrollAlert />
   </body>
 </html>
