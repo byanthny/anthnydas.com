@@ -1,0 +1,23 @@
+---
+import "@fontsource/roboto-mono";
+
+const byanthnyURL = "https://byanthny.com";
+const siteTitle = "anthnydas.com";
+---
+
+<nav
+  class="fixed w-full p-5 flex justify-between bg-black text-white font-mono backdrop-blur-sm opacity-80"
+>
+  <a href="/">
+    <h1 class="hover:underline">
+      {siteTitle}
+      <span class="opacity-80">- digital playground</span>
+    </h1>
+  </a>
+  <div>
+    <a class="hover:underline" href={byanthnyURL}
+      ><span class="opacity-80">personal wiki -</span>
+      byanthny</a
+    >
+  </div>
+</nav>

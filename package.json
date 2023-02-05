@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^3.0.1",
+    "@fontsource/libre-baskerville": "^4.5.10",
+    "@fontsource/open-sans": "^4.5.14",
+    "@fontsource/roboto-mono": "^4.5.10",
     "astro": "^2.0.4",
     "tailwindcss": "^3.0.24"
   }
