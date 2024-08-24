@@ -6,7 +6,7 @@ const Items = () => {
         <h2>anthony das</h2>
         <ul>
           <li>
-            <a href="/Resume.pdf">resume</a> &amp;{" "}
+            <a href="/resume.pdf">resume</a> &amp;{" "}
             <a href="mailto:me@anthnydas.com">email</a>
           </li>
           <li>
