@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ul {
+  @apply pl-4 list-disc pt-2 pb-3;
+}
+
+a {
+  @apply text-cyan-500;
+}
