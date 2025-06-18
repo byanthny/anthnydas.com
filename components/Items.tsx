@@ -41,7 +41,7 @@ const Items = () => {
             <ul>
               <ul>
                 <li>
-                  Web Development, Web Design, Email Marketing, DevOps, CMS
+                  Web Development, Web Design, HubSpot, CMS
                   Management, SEO, & Analytics
                 </li>
               </ul>
@@ -56,7 +56,7 @@ const Items = () => {
                   TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
                 </li>
                 <li>
-                  <a href="https://pixl.live">etp.net</a>: Next.js,
+                  <a href="https://pixl.live">pixl.live</a>: Next.js,
                   TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
                 </li>
               </ul>
