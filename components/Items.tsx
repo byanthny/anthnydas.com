@@ -49,11 +49,15 @@ const Items = () => {
               <ul>
                 <li>
                   <a href="https://eventeq.com">eventeq.com</a>: Next.js,
-                  TypeScript, TailwindCSS, Vercel, Sanity
+                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
                 </li>
                 <li>
-                  <a href="https://knw.net">knw.net</a>: Next.js, TypeScript,
-                  TailwindCSS, Sendgrid, Multi-Language
+                  <a href="https://etp.net">etp.net</a>: Next.js,
+                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+                </li>
+                <li>
+                  <a href="https://pixl.live">etp.net</a>: Next.js,
+                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
                 </li>
               </ul>
             </ul>
