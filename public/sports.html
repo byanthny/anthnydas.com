@@ -152,6 +152,10 @@
             opacity: 1;
         }
 
+        .bar.active .tooltip {
+            opacity: 1;
+        }
+
         .epl {
             background: #22c55e;
         }
@@ -1133,6 +1137,62 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Mobile tooltip functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.bar');
+            
+            bars.forEach(bar => {
+                // Add touch event for mobile
+                bar.addEventListener('touchstart', function(e) {
+                    e.preventDefault(); // Prevent scrolling when tapping
+                    
+                    // Remove active class from all other bars
+                    bars.forEach(otherBar => {
+                        if (otherBar !== bar) {
+                            otherBar.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle active class on current bar
+                    bar.classList.toggle('active');
+                });
+                
+                // Add click event for desktop and mobile
+                bar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Remove active class from all other bars
+                    bars.forEach(otherBar => {
+                        if (otherBar !== bar) {
+                            otherBar.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle active class on current bar
+                    bar.classList.toggle('active');
+                });
+            });
+            
+            // Hide tooltips when clicking/touching outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.bar')) {
+                    bars.forEach(bar => {
+                        bar.classList.remove('active');
+                    });
+                }
+            });
+            
+            document.addEventListener('touchstart', function(e) {
+                if (!e.target.closest('.bar')) {
+                    bars.forEach(bar => {
+                        bar.classList.remove('active');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
