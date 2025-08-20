@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0f0f0f;
+            color: #e5e5e5;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding-left: max(16px, 4vw);
+            padding-right: max(16px, 4vw);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+            color: #fff;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .timeline-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #1a1a1a;
+            margin-left: -16px;
+            margin-right: -16px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 3px;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: 120px repeat(17, 1fr);
+            gap: 1px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 1px;
+        }
+
+        .header {
+            background: #2a2a2a;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+        }
+
+        .sport {
+            background: #1a1a1a;
+            padding: 12px;
+            text-align: right;
+            font-size: 12px;
+            color: #ccc;
+            border-right: 1px solid #333;
+        }
+
+        .cell {
+            background: #1a1a1a;
+            position: relative;
+            min-height: 32px;
+        }
+
+        .bar {
+            background: #333;
+            height: 4px;
+            margin: 14px 4px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            height: 6px;
+            margin: 13px 4px;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 100;
+            margin-bottom: 4px;
+        }
+
+        .bar:hover .tooltip {
+            opacity: 1;
+        }
+
+        .epl {
+            background: #22c55e;
+        }
+
+        .laliga {
+            background: #ef4444;
+        }
+
+        .ucl {
+            background: #3b82f6;
+        }
+
+        .mls {
+            background: #06b6d4;
+        }
+
+        .nfl {
+            background: #8b5cf6;
+        }
+
+        .mlb {
+            background: #f59e0b;
+        }
+
+        .nascar {
+            background: #ec4899;
+        }
+
+        .f1 {
+            background: #10b981;
+        }
+
+        .drift {
+            background: #f97316;
+        }
+
+        .gt {
+            background: #6366f1;
+        }
+
+        .current {
+            position: relative;
+        }
+
+        .current::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px 0;
+                overflow-x: hidden;
+            }
+
+            h1 {
+                margin-bottom: 30px;
+                padding: 0 10px;
+            }
+
+            .container {
+                width: 100%;
+                min-width: unset;
+                overflow: hidden;
+                padding-left: max(6px, 2vw);
+                padding-right: max(6px, 2vw);
+            }
+
+            .timeline-wrapper {
+                margin-left: -6px;
+                margin-right: -6px;
+            }
+
+            .timeline {
+                grid-template-columns: 100px repeat(17, 80px);
+                min-width: 1460px;
+                width: 1460px;
+            }
+
+            .sport {
+                padding: 10px;
+                font-size: 11px;
+                position: sticky;
+                left: 0;
+                background: #1a1a1a;
+                z-index: 10;
+                border-right: 1px solid #333;
+            }
+
+            .header {
+                padding: 10px 8px;
+                font-size: 10px;
+            }
+
+            .header:first-child {
+                position: sticky;
+                left: 0;
+                background: #2a2a2a;
+                z-index: 11;
+                border-right: 1px solid #333;
+            }
+
+            .cell {
+                min-height: 28px;
+            }
+
+            .bar {
+                height: 4px;
+                margin: 12px 4px;
+            }
+
+            .bar:hover {
+                height: 5px;
+                margin: 11px 4px;
+            }
+
+            .tooltip {
+                font-size: 9px;
+                padding: 3px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                margin-bottom: 20px;
+                padding: 0 5px;
+            }
+
+            .container {
+                min-width: unset;
+                padding-left: 2px;
+                padding-right: 2px;
+            }
+
+            .timeline-wrapper {
+                margin-left: -2px;
+                margin-right: -2px;
+            }
+
+            .timeline {
+                grid-template-columns: 60px repeat(17, 1fr);
+            }
+
+            .sport {
+                padding: 6px;
+                font-size: 9px;
+            }
+
+            .header {
+                padding: 6px 2px;
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            h1 {
+                margin-bottom: 15px;
+                padding: 0 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sports Timeline</h1>
+
+        <div class="timeline-wrapper">
+            <div class="timeline">
+                <div class="header"></div>
+                <div class="header current">Aug 25</div>
+                <div class="header">Sep 25</div>
+                <div class="header">Oct 25</div>
+                <div class="header">Nov 25</div>
+                <div class="header">Dec 25</div>
+                <div class="header">Jan 26</div>
+                <div class="header">Feb 26</div>
+                <div class="header">Mar 26</div>
+                <div class="header">Apr 26</div>
+                <div class="header">May 26</div>
+                <div class="header">Jun 26</div>
+                <div class="header">Jul 26</div>
+                <div class="header">Aug 26</div>
+                <div class="header">Sep 26</div>
+                <div class="header">Oct 26</div>
+                <div class="header">Nov 26</div>
+                <div class="header">Dec 26</div>
+
+                <div class="sport">EPL</div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Season Start</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar epl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+
+                <div class="sport">La Liga</div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Season Start</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar laliga">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+
+                <div class="sport">UCL</div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">Qualifying</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League End</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">Knockouts</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">Knockouts</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">Knockouts</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">Final</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar ucl">
+                        <div class="tooltip">League Phase</div>
+                    </div>
+                </div>
+
+                <div class="sport">MLS</div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">MLS Cup</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mls">
+                        <div class="tooltip">MLS Cup</div>
+                    </div>
+                </div>
+
+                <div class="sport">NFL</div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Preseason</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Super Bowl</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Preseason</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nfl">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+
+                <div class="sport">MLB</div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Postseason</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar mlb">
+                        <div class="tooltip">Postseason</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+
+                <div class="sport">NASCAR</div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular End</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Championship</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Regular End</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Playoffs</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar nascar">
+                        <div class="tooltip">Championship</div>
+                    </div>
+                </div>
+
+                <div class="sport">F1</div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Summer Break</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Season Resume</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Season Finale</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Summer Break</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Season Resume</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar f1">
+                        <div class="tooltip">Season Finale</div>
+                    </div>
+                </div>
+
+                <div class="sport">Drift</div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Utah Round</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Season Finale</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar drift">
+                        <div class="tooltip">Season Finale</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+
+                <div class="sport">GT</div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Final Events</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">New Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Regular Season</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Final Events</div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="bar gt">
+                        <div class="tooltip">Season End</div>
+                    </div>
+                </div>
+                <div class="cell"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
