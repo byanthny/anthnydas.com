@@ -23,78 +23,80 @@ const Items = () => {
           </li>
         </ul>
       </ul>
-      <li>projects</li>
+      <li>
+        <a href="https://github.com/pinkilo">pinkilo</a>:
+      </li>
       <ul>
-        <li>current</li>
+        <li>ambition, digitally crafted.</li>
+      </ul>
+      <li>
+        <a href="https://etp.net">Entertainment Technology Partners</a>:
+      </li>
+      <ul>
+        <li>Web Developer</li>
         <ul>
-          <li>
-            <a href="https://github.com/pinkilo">pinkilo</a>:
-          </li>
           <ul>
-            <li>we craft experiences</li>
+            <li>
+              Web Development, Web Design, AWS, CMS Development, SEO, &
+              Analytics
+            </li>
           </ul>
-          <li>
-            <a href="https://etp.net">Entertainment Technology Partners</a>:
-          </li>
+          <li>Notable Work:</li>
           <ul>
-            <li>Web Developer</li>
-            <ul>
-              <ul>
-                <li>
-                  Web Development, Web Design, HubSpot, CMS
-                  Management, SEO, & Analytics
-                </li>
-              </ul>
-              <li>Notable Work:</li>
-              <ul>
-                <li>
-                  <a href="https://eventeq.com">eventeq.com</a>: Next.js,
-                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                </li>
-                <li>
-                  <a href="https://etp.net">etp.net</a>: Next.js,
-                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                </li>
-                <li>
-                  <a href="https://pixl.live">pixl.live</a>: Next.js,
-                  TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                </li>
-              </ul>
-            </ul>
+            <li>
+              <a href="https://eventeq.com">eventeq.com</a>: Next.js,
+              TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+            </li>
+            <li>
+              <a href="https://etp.net">etp.net</a>: Next.js, TypeScript,
+              TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+            </li>
+            <li>
+              <a href="https://pixl.live">pixl.live</a>: Next.js, TypeScript,
+              TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+            </li>
           </ul>
         </ul>
-        <li>backlog/maintaining</li>
+      </ul>
+      <li>projects</li>
+      <ul>
+        <li>
+          <em>current:</em>
+        </li>
+        <ul>
+          <li>
+            <a href="https://github.com/byanthny/macropad-rp2040">
+              rp2040 macropad
+            </a>
+            : adafruit rp2040 macropad kit programmed with rust
+          </li>
+          <ul>
+            <li>rust</li>
+          </ul>
+        </ul>
+        <li>
+          <em>backlog/maintaining:</em>
+        </li>
         <ul>
           <li>
             <a href="https://github.com/byanthny/.dotfiles">.dotfiles</a>: my
             dotfiles
           </li>
-          <li>
-            <a href="https://github.com/byanthny/opengl">opengl</a>: learning
-            opengl by making a game engine
+          {/* <li>
+            <a href="https://github.com/byanthny/opengl">opengl [on hold]</a>:
+            learning opengl by making a game engine
           </li>
           <ul>
             <li>c++</li>
-          </ul>
-          <li>
-            <a href="https://github.com/byanthny/macropad-rp2040">
-              rp2040 macropad
-            </a>
-            : custom macropad with rp2040
-          </li>
-          <ul>
-            <li>
-              code for custom macropad built with adafruit&apos;s macropad
-              rp2040 kit
-            </li>
-            <li>python</li>
-          </ul>
-          <li>
+          </ul> */}
+          {/* <li>
             <a href="https://github.com/byanthny/anthnydas.com">anthnydas</a>:
             tbd
-          </li>
+          </li> */}
         </ul>
-        <li>archive</li>
+        <li>
+          <em>archive:</em>
+        </li>
         <ul>
           <li>
             <a href="https://github.com/byanthny/yugo">yugo</a>: basic hugo
@@ -218,7 +220,7 @@ const Items = () => {
         </li>
       </ul>
     </ul>
-  );
-};
+  )
+}
 
-export default Items;
+export default Items
