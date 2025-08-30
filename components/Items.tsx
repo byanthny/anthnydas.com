@@ -24,10 +24,14 @@ const Items = () => {
         </ul>
       </ul>
       <li>
-        <a href="https://github.com/pinkilo">pinkilo</a>:
+        <a href="https://pinkilo.com">pinkilo</a>:
       </li>
       <ul>
         <li>ambition, digitally crafted.</li>
+        <li>
+          specializing in software/web consulting & development and IT
+          architecture.
+        </li>
       </ul>
       <li>
         <a href="https://etp.net">Entertainment Technology Partners</a>:
@@ -73,6 +77,19 @@ const Items = () => {
           <ul>
             <li>rust</li>
           </ul>
+        </ul>
+        <li>
+          <em>my random websites:</em>
+        </li>
+        <ul>
+          <li>
+            <a href="https://tonysshrimpshack.com">tonysshrimpshack.com</a>: a
+            website to show off my shrimp tank
+          </li>
+          <li>
+            <a href="https://sweettearankings.com">sweettearankings.com</a>: my
+            person sweet tea rankings
+          </li>
         </ul>
         <li>
           <em>backlog/maintaining:</em>
