@@ -88,7 +88,7 @@ const Items = () => {
           </li>
           <li>
             <a href="https://sweettearankings.com">sweettearankings.com</a>: my
-            person sweet tea rankings
+            personal sweet tea rankings
           </li>
         </ul>
         <li>
@@ -209,7 +209,7 @@ const Items = () => {
           </li>
           <ul>
             <li>
-              abandonded because better projects exist and learned what i needed
+              abandoned because better projects exist and learned what i needed
             </li>
             <li>less, html</li>
           </ul>
@@ -218,11 +218,11 @@ const Items = () => {
             <a href="https://www.youtube.com/watch?v=DPesVSQQUqY">
               leadingedge labs &amp; r3d
             </a>
-            : game based therapy for custom 3-D printed myoelectric prosthethics
+            : game based therapy for custom 3-D printed myoelectric prosthetics
             + project website
           </li>
           <ul>
-            <li>built during after school program from highschool</li>
+            <li>built during after school program from high school</li>
             <li>unity, leapmotion, arduino, c++, html/css/js</li>
           </ul>
         </ul>
