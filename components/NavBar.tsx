@@ -9,9 +9,9 @@ const NavBar = () => {
           <Link href="/" className="text-neutral-300 hover:text-white">
             index
           </Link>
-          {/* <Link href="/log" className="text-neutral-300 hover:text-white">
+          <Link href="/log" className="text-neutral-300 hover:text-white">
             log
-          </Link> */}
+          </Link>
         </div>
       </div>
     </nav>

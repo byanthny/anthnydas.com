@@ -17,7 +17,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-black text-white">
         <NavBar />
+        <div className="px-[25%] pt-20">
+
         {children}
+        </div>
         <Analytics />
       </body>
     </html>
