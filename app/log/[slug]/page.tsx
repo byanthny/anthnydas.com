@@ -1,4 +1,4 @@
-import { getEntryMetadata, getEntrySlugs, getEntry } from '@/lib/log'
+import { getEntry, getEntryMetadata, getEntrySlugs } from '@/lib/log'
 import { MDXRemote } from 'next-mdx-remote-client/rsc'
 import { notFound } from 'next/navigation'
 
@@ -37,12 +37,12 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
       <article>
         <h1 className="text-4xl font-bold mb-2">{title}</h1>
         <time className="text-neutral-400 text-sm">{date}</time>
-        <div className="mt-8">
-          <MDXRemote source={content} />
+        <div className="mt-8 pl-4 prose prose-invert prose-cyan max-w-none">
+          {await MDXRemote({ source: content })}
         </div>
       </article>
       <a href="/log" className="text-cyan-400 hover:underline mt-8 inline-block">
-        ← Back to log
+        ← back to log
       </a>
     </div>
   )
