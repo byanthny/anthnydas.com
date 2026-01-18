@@ -1,4 +1,10 @@
-const Items = () => {
+import { getEntriesByProject } from '@/lib/log'
+import EntryLink from './EntryLink'
+
+const Items = async () => {
+  // Fetch log entries for each project
+  const macropadEntries = await getEntriesByProject('macropad-rp2040')
+
   return (
     <ul className="list-disc">
       <li>info</li>
@@ -76,6 +82,14 @@ const Items = () => {
           </li>
           <ul>
             <li>rust</li>
+            {macropadEntries.length > 0 && <li>log:</li>}
+            {macropadEntries.length > 0 && (
+              <ul>
+                {macropadEntries.slice(0, 3).map((entry) => (
+                  <EntryLink key={entry.slug} entry={entry} />
+                ))}
+              </ul>
+            )}
           </ul>
         </ul>
         <li>
