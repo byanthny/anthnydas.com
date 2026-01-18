@@ -14,7 +14,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
   const { slug } = await params
 
   // Dynamic import of MDX file (Vercel's recommended approach)
-  const { default: Entry, metadata } = await import(`@/content/${slug}.mdx`)
+  const { default: Entry, metadata } = await import(`../../../content/${slug}.mdx`)
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-20">

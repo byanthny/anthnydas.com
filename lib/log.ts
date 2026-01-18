@@ -12,7 +12,7 @@ export function getEntrySlugs(): string[] {
 }
 
 export async function getEntryMetadata(slug: string): Promise<EntryMetadata> {
-  const { metadata } = await import(`@/content/${slug}.mdx`)
+  const { metadata } = await import(`../content/${slug}.mdx`)
   return metadata
 }
 
