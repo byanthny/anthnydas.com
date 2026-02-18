@@ -18,6 +18,11 @@ const Items = async () => {
           <li>
             b.s. in computer science from <a href="https://jhu.edu">jhu</a>
           </li>
+          <li>focusing on building ambitious products</li>
+          <ul>
+            <li>software architecture & fullstack engineering</li>
+            <li>machine learning & computer vision</li>
+          </ul>
         </ul>
         <li>socials</li>
         <ul>
@@ -40,31 +45,37 @@ const Items = async () => {
         </li>
       </ul>
       <li>
-        <a href="https://etp.net">Entertainment Technology Partners</a>:
+        <em>past:</em>
       </li>
       <ul>
-        <li>Web Developer</li>
+        <li>
+          <a href="https://etp.net">Entertainment Technology Partners</a>:
+        </li>
         <ul>
+          <li>Web Developer</li>
           <ul>
-            <li>
-              Web Development, Web Design, AWS, CMS Development, SEO, &
-              Analytics
-            </li>
-          </ul>
-          <li>Notable Work:</li>
-          <ul>
-            <li>
-              <a href="https://eventeq.com">eventeq.com</a>: Next.js,
-              TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-            </li>
-            <li>
-              <a href="https://etp.net">etp.net</a>: Next.js, TypeScript,
-              TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-            </li>
-            <li>
-              <a href="https://pixl.live">pixl.live</a>: Next.js, TypeScript,
-              TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-            </li>
+            <ul>
+              <li>
+                Web Development, Web Design, AWS, CMS Development, SEO, &
+                Analytics
+              </li>
+              <li>Computer Vision, AI & Edge Devices</li>
+            </ul>
+            <li>Notable Work:</li>
+            <ul>
+              <li>
+                <a href="https://eventeq.com">eventeq.com</a>: Next.js,
+                TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+              </li>
+              <li>
+                <a href="https://etp.net">etp.net</a>: Next.js, TypeScript,
+                TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+              </li>
+              <li>
+                <a href="https://pixl.live">pixl.live</a>: Next.js, TypeScript,
+                TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
+              </li>
+            </ul>
           </ul>
         </ul>
       </ul>
