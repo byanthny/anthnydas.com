@@ -4,7 +4,8 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "byanthny | my work",
+  metadataBase: new URL("https://anthnydas.com"),
+  title: "anthnydas | my work",
   description: "my work",
 }
 

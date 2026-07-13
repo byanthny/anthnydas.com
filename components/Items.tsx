@@ -255,7 +255,7 @@ const Items = async () => {
       <li>site info</li>
       <ul>
         <li>
-          <a href="https://github.com/byanthny/byanthny">github repo</a>
+          <a href="https://github.com/byanthny/anthnydas.com">github repo</a>
         </li>
         <li>
           built with <a href="https://vercel.com/">Next.js & Vercel</a>.
