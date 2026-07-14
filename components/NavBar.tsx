@@ -12,7 +12,7 @@ const NavBar = () => {
       <div className="bg-neutral-900/50 backdrop-blur-md rounded-lg w-full flex flex-row justify-between items-center border-neutral-700/10 border-2 px-6 py-3">
         <h1 className="text-lg">
           <Link href="/" className="text-white font-bold">
-            @anthnydas
+            anthony das
           </Link>
           {isLogPage && ' - log'}
         </h1>
