@@ -7,14 +7,14 @@
 - **Scope:** security, privacy, SEO, dependencies/tooling, accessibility, performance, code health. Routes: `/`, `/log`, `/log/welcome`, `/sports`.
 - **Findings:** 36 total: **3 High, 6 Med, 27 Low**.
 - **Fixed in this PR (10):** security headers, 95 of 99 `pnpm audit` advisories (both criticals in `next`), dependency refresh, empty-href anchors, red lint on main, duplicate ESLint configs, `engines`/`.nvmrc`, `.gitignore` gaps, missing 404/error pages, stale `content/README.md`.
-- **Recommended (16):** the main ones are the mobile layout padding (High), CI, enforcing the CSP with nonces, and fixing the list nesting.
+- **Recommended (16):** the main ones are the mobile layout padding (High), CI, tightening the CSP, and fixing the list nesting.
 - **Deferred (10):** HSTS preload (Tony's call), 4 transitive advisories with no patched version reachable in the current majors, major version upgrades, and everything about `/sports`, which moves to `sports.anthnydas.com`.
 - **Unchanged on purpose:** HSTS, mobile padding, list nesting, the `byanthny` social handles, and the `/sports` page.
 
 ## Method
 
 - **Commands run on baseline `a8c84e6` and on HEAD:** `pnpm install --frozen-lockfile`, `pnpm audit`, `pnpm outdated`, `pnpm lint`, `pnpm build`, and `curl -sI http://localhost:3000/` against `pnpm start` for the response headers.
-- **Source checks:** `git grep` across the tracked tree for env vars, secrets, forms, cookies, storage, fonts, images, `<script>` and `<h1>`. Every `file:line` below is as of the commit that adds this report.
+- **Source checks:** `git grep` across the tracked tree for env vars, secrets, forms, cookies, storage, fonts, images, `<script>` and `<h1>`. Every `file:line` below is as of the branch HEAD.
 - **Lighthouse:** 13.5.0 CLI with headless Chrome against a local production server (`pnpm build && pnpm start`, `http://localhost:3000`). It ran on 4 routes × 2 form factors: mobile is the default (simulated throttling, 412×823) and desktop uses `--preset=desktop`. There were two runs, one before (baseline) and one after (HEAD). Scores are single runs, so treat ±1 as noise.
 - **Screenshots:** Playwright `npx playwright screenshot --full-page` at 1440×900 and 375×812 for all 4 routes, before and after. The screenshots are not committed.
 - **Visual verification:**
@@ -27,11 +27,11 @@
 | ID | Severity | Finding | Evidence | Fix | Status |
 |---|---|---|---|---|---|
 | SEC-1 | High | No security headers were sent. The baseline response had only Next/caching headers. | baseline `curl -sI /` output; headers now set in `next.config.mjs:3-23` | Added `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()` and `Content-Security-Policy-Report-Only` on `/(.*)`. Verified on `/` and `/sports`. | Fixed in PR |
-| SEC-2 | High | `pnpm audit` found 99 advisories (2 critical, 55 high). 33 of them were in `next` itself, including two unauthenticated RCEs (GHSA-p293-qw3h-jr36, GHSA-2xp9-vwfh-vxw4, fixed in 16.3.3). | `pnpm audit` before/after (Appendix); `package.json:19` | `next` 16.1.3 → 16.4.0 plus `pnpm update` → 4 advisories left | Fixed in PR |
+| SEC-2 | High | `pnpm audit` found 99 advisories (2 critical, 55 high). 33 of them were in `next` itself, including two unauthenticated RCEs (GHSA-p293-qw3h-jr36, GHSA-2xp9-vwfh-vxw4, fixed in 16.3.3). Those two need a Windows-hosted server or a self-hosted Image Optimization API; this site runs on Vercel (Linux) and serves no images, so the real-world exposure was low. The upgrade is still correct. | `pnpm audit` before/after (Appendix); `package.json:19` | `next` 16.1.3 → 16.4.0 plus `pnpm update` → 4 advisories left | Fixed in PR |
 | SEC-3 | Low | The 4 advisories that remain are all transitive with no patched version in range: `braces` (high, dev-only via `eslint-config-next`), `sprintf-js` (moderate, via `gray-matter`, build-time), and `postcss-selector-parser` (moderate, via tailwind and typography, build-time). | `pnpm audit` after (Appendix) | Re-run `pnpm audit` when upstream ships fixes. None of them reach the browser bundle. | Deferred |
-| SEC-4 | Med | The CSP is report-only. Enforcing it without `'unsafe-inline'` needs nonces or hashes for the inline JSON-LD blocks and for the inline script in `/sports`. | `app/page.tsx:25-30`, `app/log/[slug]/page.tsx:83-88`, `public/sports.html:1148`; policy at `next.config.mjs:15-19` | Add nonce-based CSP via middleware for App Router pages. `/sports` leaves this repo (see SEO-1). | Recommended |
-| SEC-5 | Low | The report-only CSP has no `report-to`/`report-uri`, so violations only appear in each visitor's DevTools console. Nobody collects them. | `next.config.mjs:16-18` | Add a reporting endpoint, or check DevTools on a Vercel preview before enforcing | Recommended |
-| SEC-6 | Low | CSP `script-src` allows `https://va.vercel-scripts.com`. `@vercel/analytics` v2 loads `/_vercel/insights/script.js` (same origin) in production and only uses that host for the debug build. | `next.config.mjs:18`; `@vercel/analytics@2.0.1 dist/react/index.mjs:80,85` | Re-check the allowed hosts against real report traffic before ever enforcing | Recommended |
+| SEC-4 | Med | The CSP is report-only and allows `'unsafe-inline'` in `script-src`. The JSON-LD blocks are not the reason: `<script type="application/ld+json">` is a data block that never executes, so CSP does not apply to it and it needs no nonce. What blocks dropping `'unsafe-inline'` is Next's own inline bootstrap/RSC scripts (`self.__next_f.push(...)`) on every App Router page, and the inline script in `/sports`. | JSON-LD (not affected) at `app/page.tsx:25-30`, `app/log/[slug]/page.tsx:83-88`; inline Next scripts in the prerendered HTML (`pnpm build` → `.next/server/app/index.html`); `public/sports.html:1148`; policy at `next.config.mjs:15-19` | A nonce-based CSP (set per request in `proxy.ts`) forces every App Router page to render dynamically, so this fully static site would lose prerendering and CDN caching. Cheaper options: a hash-based CSP, or stay report-only with `'unsafe-inline'`. `/sports` leaves this repo (see SEO-1). | Recommended |
+| SEC-5 | Low | The report-only CSP has no `report-to`/`report-uri`, so violations only appear in each visitor's DevTools console. Nobody collects them. | `next.config.mjs:16-18` | Add a reporting endpoint, or check DevTools on a Vercel preview before enforcing. Violations to ignore: `'unsafe-eval'` under `next dev` (React/Next use eval in dev only), and `https://vercel.live` script/frame/connect reports on Vercel preview deployments (Vercel Toolbar). | Recommended |
+| SEC-6 | Low | CSP `script-src` allows `https://va.vercel-scripts.com`. `@vercel/analytics` v2 loads `/_vercel/insights/script.js` (same origin) in production and only uses that host for the debug build. | `next.config.mjs:18`; `@vercel/analytics@2.0.1 dist/react/index.mjs:80,85,122-126` | Re-check the allowed hosts against real report traffic before ever enforcing. `connect-src https://vitals.vercel-insights.com` is also unused (Speed Insights is not installed, see `package.json:14-33`; analytics v2 posts same-origin to `/_vercel/insights/*`), so it can be dropped when the policy is tightened. | Recommended |
 | SEC-7 | Low | HSTS is not set in the app config. Vercel sends `Strict-Transport-Security` by default on its domains. Adding `preload` is close to irreversible. | `next.config.mjs:3-23` (no HSTS entry, on purpose) | Leave Vercel's default. Opting into preload is Tony's call. | Deferred |
 | SEC-8 | Low | The `X-Powered-By: Next.js` header discloses the framework. | `curl -sI /` before and after | `poweredByHeader: false` in `next.config.mjs` | Recommended |
 
@@ -67,9 +67,9 @@
 |---|---|---|---|---|---|
 | DEP-1 | Med | The dependencies were stale. See the before→after table below. | `pnpm outdated` before (Appendix); `package.json:15-32` | `pnpm update`, then `next` and `eslint-config-next` pinned to `16.4.0`, and `@vercel/analytics` raised to `^2.0.1` | Fixed in PR |
 | DEP-2 | Low | `@vercel/analytics` 1.3.1 → 2.0.1 is a major bump. Both properties below were checked, but runtime behaviour on Vercel can't be verified locally. Locally the script 404s because `/_vercel/insights` only exists on Vercel. | `package.json:17`; `app/layout.tsx:2,65` | Check the Vercel Analytics dashboard after deploy | Recommended |
-| DEP-3 | Low | There was no Node version contract. | `package.json:5-7`; `.nvmrc:1` | Added `"engines": { "node": ">=20.9" }` and an `.nvmrc` set to `22` | Fixed in PR |
+| DEP-3 | Low | There was no Node version contract. | `package.json:5-7`; `.nvmrc:1` | Added `"engines": { "node": "22.x" }` and an `.nvmrc` set to `22`. Pinned to `22.x` so Vercel's runtime matches `.nvmrc` (Vercel honours `engines.node`; an open range builds on the newest major). Check the Vercel build log after deploy. | Fixed in PR |
 | DEP-4 | Low | `.gitignore` covered only `.env*.local`, so a plain `.env` or `.env.production` could be committed. | `.gitignore:29-31` | Added `.env` and `.env.production` | Fixed in PR |
-| DEP-5 | Low | There were no custom `not-found`/`error` pages, so the site fell back to the Next defaults. | `app/not-found.tsx:1-15`, `app/error.tsx:1-28` | Added both, styled like the site | Fixed in PR |
+| DEP-5 | Low | There were no custom `not-found`/`error` pages, so the site fell back to the Next defaults. | `app/not-found.tsx:1-17`, `app/error.tsx:1-28` | Added both, styled like the site | Fixed in PR |
 | DEP-6 | Med | No tests and no CI. Lint was red on main without anyone noticing (CODE-1). | no `.github/`; `package.json:8-13` (no `test` script) | Add a GitHub Actions workflow that runs `pnpm lint && pnpm build` on PRs. It is not added in this PR. | Recommended |
 | DEP-7 | Low | `pnpm update` raised the caret floors in `package.json`, for example `"eslint": "^9"` → `"^9.39.5"`. The majors are the same. | `package.json:16-31` | Cosmetic. Keep it, or restore the loose ranges by hand. | Deferred |
 | DEP-8 | Low | Majors not taken: react/react-dom 19.3.0, @types/react(-dom) 19.3.0, @types/node 26, eslint 10, tailwindcss 4, typescript 7. | `pnpm outdated` after (Appendix) | Upgrade one at a time in separate PRs. Tailwind 4 is a config migration. | Deferred |
@@ -110,7 +110,7 @@
 
 **Checked:**
 - **Contrast:** secondary text `text-neutral-400` (#a3a3a3) on the `bg-black` body (`app/layout.tsx:59`) is **8.33:1**. That passes WCAG AA for normal text (4.5:1) and large text (3:1), and also AAA (7:1). Body links `text-cyan-500` (#06b6d4) are 8.65:1 and log links `text-cyan-400` are 11.62:1, so both pass.
-- **Single `<h1>` per page:** `/` (`app/page.tsx:31`, sr-only), `/log` (`app/log/page.tsx:24`, sr-only), log entries (`app/log/[slug]/page.tsx:90`), 404 (`app/not-found.tsx:6`), error (`app/error.tsx:14`), `/sports` (`public/sports.html:356`).
+- **Single `<h1>` per page:** `/` (`app/page.tsx:31`, sr-only), `/log` (`app/log/page.tsx:24`, sr-only), log entries (`app/log/[slug]/page.tsx:90`), 404 (`app/not-found.tsx:8`), error (`app/error.tsx:14`), `/sports` (`public/sports.html:356`).
 - `<html lang="en">` is set (`app/layout.tsx:58`).
 
 ## Performance
@@ -149,16 +149,16 @@
 | CODE-4 | Low | The home page content is ~250 lines of hardcoded nested JSX, which is hard to edit and is where the invalid nesting (A11Y-2) comes from. | `components/Items.tsx:8-265` | Later: move it to a data file (projects/roles) rendered by a small recursive list component. That also fixes A11Y-2. | Recommended |
 | CODE-5 | Low | Log entries are sorted by string comparison of `date`. This works only while every date is ISO `YYYY-MM-DD`. | `lib/log.ts:67-69` | Validate the date format in `readMDXFile`, or compare `Date` values | Deferred |
 | CODE-6 | Low | `EntryLink` uses a plain `<a>` for internal `/log/...` links, which causes a full page reload. Lint does not flag it because the href is a template literal. | `components/EntryLink.tsx:10` | Use `next/link` | Recommended |
-| CODE-7 | Low | The new 404 and error pages use an unstyled visible `<h1>`. Every other App Router page uses an `sr-only` h1 or a styled title. | `app/not-found.tsx:6`; `app/error.tsx:14` | Match one of the existing patterns | Recommended |
+| CODE-7 | Low | The new 404 and error pages use an unstyled visible `<h1>`. Every other App Router page uses an `sr-only` h1 or a styled title. | `app/not-found.tsx:8`; `app/error.tsx:14` | Match one of the existing patterns | Recommended |
 
 ## Recommended next steps
 
 1. Fix mobile padding (A11Y-1): use `px-6 md:px-[15%] lg:px-[25%]` and check at 375px.
 2. Add CI (DEP-6): a GitHub Actions workflow that runs `pnpm lint && pnpm build` on every PR.
-3. After deploy, confirm analytics still records in the Vercel Analytics dashboard (DEP-2), and re-run Lighthouse on the preview URL (PERF-1).
+3. After deploy, confirm Node 22 in the Vercel build log (DEP-3), confirm analytics still records in the Vercel Analytics dashboard (DEP-2), and re-run Lighthouse on the preview URL (PERF-1).
 4. Move `/sports` to `sports.anthnydas.com`. Then, in the cutover PR, redirect `/sports`, delete `public/sports.html` and remove the sitemap entry. This resolves SEO-1, SEO-3, A11Y-5, A11Y-6 and PERF-2.
 5. Restructure the home list into data plus valid nesting (CODE-4, A11Y-2), and add link underlines (A11Y-3) and a layout-level `<main>` (A11Y-4) in the same visual pass.
-6. Collect CSP reports (SEC-5), prune `script-src` (SEC-6), then move to a nonce-based enforcing CSP (SEC-4).
+6. Collect CSP reports (SEC-5), prune `script-src`/`connect-src` (SEC-6), then decide on SEC-4: a hash-based enforcing CSP, or stay report-only with `'unsafe-inline'`. A nonce CSP via `proxy.ts` would make every page dynamic.
 7. Small cleanups: `poweredByHeader: false` (SEC-8), `next/link` in `EntryLink` (CODE-6), styled 404/error h1 (CODE-7), `dateModified` (SEO-4).
 8. Plan the major upgrades one at a time: React 19.3, ESLint 10, Tailwind 4, TypeScript 7 (DEP-8).
 
