@@ -7,18 +7,18 @@ This directory contains MDX log entries for the website.
 Create `.mdx` files in this directory with the following structure:
 
 ```mdx
-export const metadata = {
-  title: "Your Entry Title",
-  date: "2026-01-18",
-  description: "Brief description of the entry",
-  project: "project-slug", // Optional: links entry to a project on homepage
-  tags: ["tag1", "tag2"]   // Optional: for future filtering
-}
-
-# Your Entry Title
+---
+title: "Your Entry Title"
+date: "2026-01-18"
+description: "Brief description of the entry"
+project: "project-slug"   # Optional: links entry to a project on homepage
+tags: ["tag1", "tag2"]    # Optional: for future filtering
+---
 
 Your markdown content here...
 ```
+
+Metadata is YAML frontmatter between the `---` lines at the top of the file, parsed by `gray-matter` in `lib/log.ts`.
 
 ## Metadata Fields
 
@@ -39,11 +39,10 @@ To link entries to projects on the homepage, use these project values:
 
 ## MDX Features
 
-You can use all markdown features plus React components:
+You can use all markdown features:
 
 - **Markdown**: headings, lists, links, images, code blocks
-- **React Components**: Import and use React components in your content
-- **Custom Components**: Use custom components defined in `mdx-components.tsx`
+- **React Components**: only components passed via the `components` prop of `MDXRemote` in `app/log/[slug]/page.tsx` (none are passed today); `import` statements inside `.mdx` files do not resolve
 
 ## File Naming
 

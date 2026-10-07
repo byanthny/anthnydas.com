@@ -191,7 +191,7 @@ const Items = async () => {
             </li>
           </ul>
           <li>
-            2020 - <a href="">drosophila</a> [no public repo]: helped expand
+            2020 - drosophila [no public repo]: helped expand
             computational models of Drosophila neuron behavior
           </li>
           <ul>
@@ -200,7 +200,7 @@ const Items = async () => {
             <li>members: lab</li>
           </ul>
           <li>
-            2020 - <a href="">pintOS</a> [no public repo]: operating system
+            2020 - pintOS [no public repo]: operating system
           </li>
           <ul>
             <li>class project from uni based on pintOS, repo owned by uni</li>
@@ -208,7 +208,7 @@ const Items = async () => {
             <li>members: class group</li>
           </ul>
           <li>
-            2020 - <a href="">CoGS</a> [no public repo]: android application for
+            2020 - CoGS [no public repo]: android application for
             study groups
           </li>
           <ul>
