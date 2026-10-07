@@ -1,6 +1,7 @@
 import { getEntry, getEntryMetadata, getEntrySlugs } from '@/lib/log'
 import { author, siteName, siteUrl } from '@/lib/site'
 import { MDXRemote } from 'next-mdx-remote-client/rsc'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -94,9 +95,9 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
           {await MDXRemote({ source: content })}
         </div>
       </article>
-      <a href="/log" className="text-cyan-400 hover:underline mt-8 inline-block">
+      <Link href="/log" className="text-cyan-400 hover:underline mt-8 inline-block">
         ← back to log
-      </a>
+      </Link>
     </div>
   )
 }
