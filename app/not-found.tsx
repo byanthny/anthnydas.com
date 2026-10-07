@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+export const metadata = { title: 'not found' }
+
 export default function NotFound() {
   return (
     <div>

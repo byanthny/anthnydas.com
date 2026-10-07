@@ -39,10 +39,10 @@ To link entries to projects on the homepage, use these project values:
 
 ## MDX Features
 
-You can use all markdown features plus React components:
+You can use all markdown features:
 
 - **Markdown**: headings, lists, links, images, code blocks
-- **React Components**: Import and use React components in your content
+- **React Components**: only components passed via the `components` prop of `MDXRemote` in `app/log/[slug]/page.tsx` (none are passed today); `import` statements inside `.mdx` files do not resolve
 
 ## File Naming
 
