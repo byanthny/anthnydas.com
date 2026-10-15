@@ -102,6 +102,9 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
   )
 }
 
+// only the slugs from the build exist; anything else (drafts included) is a 404
+export const dynamicParams = false
+
 export function generateStaticParams() {
   const slugs = getEntrySlugs()
   return slugs.map((slug) => ({ slug }))
