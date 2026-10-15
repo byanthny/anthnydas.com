@@ -35,6 +35,8 @@ export function getEntrySlugs(): string[] {
   return files
     .filter((file) => file.endsWith('.mdx'))
     .map((file) => file.replace(/\.mdx$/, ''))
+    // drafts stay in the repo and out of the site
+    .filter((slug) => readMDXFile(slug).draft !== true)
 }
 
 /**

@@ -4,6 +4,7 @@ export interface EntryMetadata {
   description: string
   project?: string
   tags?: string[]
+  draft?: boolean
 }
 
 export interface Entry extends EntryMetadata {
