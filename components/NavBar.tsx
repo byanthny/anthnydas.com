@@ -8,7 +8,7 @@ const NavBar = () => {
   const isLogPage = pathname === '/log'
 
   return (
-    <nav className={`fixed top-0 w-full p-6 px-[8%] md:px-[20%] pt-3 z-50`}>
+    <nav className={`fixed top-0 w-full p-6 px-5 sm:px-[10%] md:px-[16%] lg:px-[20%] pt-3 z-50`}>
       <div className="bg-neutral-900/50 backdrop-blur-md rounded-lg w-full flex flex-row justify-between items-center border-neutral-700/10 border-2 px-6 py-3">
         <div className="text-lg">
           <Link href="/" className="text-white font-bold">
