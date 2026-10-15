@@ -27,6 +27,7 @@ Metadata is YAML frontmatter between the `---` lines at the top of the file, par
 - **description** (required): Brief description shown in lists
 - **project** (optional): Project identifier to link entry to homepage projects
 - **tags** (optional): Array of tags for categorization
+- **draft** (optional): `true` keeps the entry out of the site (lists, pages, sitemap) until it's done
 
 ## Project Identifiers
 
