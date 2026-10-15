@@ -165,18 +165,15 @@ const Items = async () => {
                 <a href="https://github.com/byanthny/.dotfiles">.dotfiles</a>:
                 my dotfiles
               </li>
+              <li>
+                <a href="https://github.com/byanthny/yugo">yugo</a>: a basic dark
+                hugo theme, the first version of this site. v1, maintenance mode
+              </li>
             </ul>
           </li>
           <li>
             <em>archive:</em>
             <ul>
-              <li>
-                <a href="https://github.com/byanthny/yugo">yugo</a>: basic hugo
-                theme
-                <ul>
-                  <li>your go to hugo theme</li>
-                </ul>
-              </li>
               <li>
                 2022 -{" "}
                 <a href="https://gitlab.com/JonoAugustine/on-it">on-it</a>:
