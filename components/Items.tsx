@@ -33,8 +33,7 @@ const Items = async () => {
         <ul>
           <li>
             <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
-            : visual notes on algorithms, graphics, and the tools i use. every
-            page is also plain markdown, and there&apos;s an mcp for your ai
+            : visual notes on algorithms, graphics, and the tools i use
             <ul>
               <li>astro, react, gsap</li>
               {learningEntries.length > 0 && (
