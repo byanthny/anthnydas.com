@@ -35,13 +35,18 @@ export function getEntrySlugs(): string[] {
   return files
     .filter((file) => file.endsWith('.mdx'))
     .map((file) => file.replace(/\.mdx$/, ''))
+    // drafts stay in the repo and out of the site
+    .filter((slug) => readMDXFile(slug).draft !== true)
 }
 
 /**
  * Get a single entry by slug (with content for rendering)
  */
 export function getEntry(slug: string): MDXFile {
-  return readMDXFile(slug)
+  const entry = readMDXFile(slug)
+  // a draft is not an entry: the page and the og image 404 on it like any unknown slug
+  if (entry.draft === true) throw new Error(`draft: ${slug}`)
+  return entry
 }
 
 /**

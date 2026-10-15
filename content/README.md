@@ -27,12 +27,14 @@ Metadata is YAML frontmatter between the `---` lines at the top of the file, par
 - **description** (required): Brief description shown in lists
 - **project** (optional): Project identifier to link entry to homepage projects
 - **tags** (optional): Array of tags for categorization
+- **draft** (optional): `true` keeps the entry out of the site (lists, pages, sitemap) until it's done
 
 ## Project Identifiers
 
 To link entries to projects on the homepage, use these project values:
 
 - `macropad-rp2040` - RP2040 Macropad project
+- `learning` - learning.anthnydas.com
 - `dotfiles` - .dotfiles repository
 - `tonysshrimpshack` - tonysshrimpshack.com
 - `sweettearankings` - sweettearankings.com

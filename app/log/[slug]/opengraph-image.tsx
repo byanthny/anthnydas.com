@@ -7,6 +7,9 @@ export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 // Pre-render an OG card for every log entry at build time.
+// only the slugs from the build exist; anything else (drafts included) is a 404
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return getEntrySlugs().map((slug) => ({ slug }))
 }
