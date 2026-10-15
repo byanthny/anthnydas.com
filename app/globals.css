@@ -12,7 +12,7 @@ a {
 
 /* a collapsible list item: keep the bullet, drop the triangle, show + / - after the text */
 summary {
-  @apply cursor-pointer list-none text-neutral-300;
+  @apply cursor-pointer list-none text-cyan-400;
 }
 summary::-webkit-details-marker {
   display: none;
