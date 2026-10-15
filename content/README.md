@@ -33,6 +33,7 @@ Metadata is YAML frontmatter between the `---` lines at the top of the file, par
 To link entries to projects on the homepage, use these project values:
 
 - `macropad-rp2040` - RP2040 Macropad project
+- `learning` - learning.anthnydas.com
 - `dotfiles` - .dotfiles repository
 - `tonysshrimpshack` - tonysshrimpshack.com
 - `sweettearankings` - sweettearankings.com

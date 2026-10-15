@@ -7,7 +7,7 @@ interface EntryLinkProps {
 export default function EntryLink({ entry }: EntryLinkProps) {
   return (
     <li>
-      <a href={`/log/${entry.slug}`} className="text-cyan-400 hover:underline">
+      <a href={`/log/${entry.slug}`} className="hover:underline">
         {entry.date}: {entry.title}
       </a>
       {entry.description && ` - ${entry.description}`}
