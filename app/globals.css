@@ -9,3 +9,17 @@ ul {
 a {
   @apply text-cyan-400;
 }
+
+/* a collapsible list item: keep the bullet, drop the triangle, show + / - after the text */
+summary {
+  @apply cursor-pointer list-none text-neutral-300;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::after {
+  content: " +";
+}
+details[open] > summary::after {
+  content: " -";
+}
