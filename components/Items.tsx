@@ -10,7 +10,7 @@ const Items = async () => {
   return (
     <ul className="list-disc">
       <li>
-        anthony das
+        <strong>anthony das</strong>
         <ul>
           {/* draft, edit me: the one line about what you do and where it's going */}
           <li>
@@ -29,7 +29,7 @@ const Items = async () => {
         </ul>
       </li>
       <li>
-        now
+        <span className="underline underline-offset-4">now</span>
         <ul>
           <li>
             <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
@@ -70,16 +70,30 @@ const Items = async () => {
         </ul>
       </li>
       <li>
-        work
+        <span className="underline underline-offset-4">work</span>
         <ul>
           <li>
-            <a href="https://pinkilo.com">pinkilo</a>: ambition, digitally
-            crafted. software/web consulting & development and IT architecture
+            <em>current:</em>
+            <ul>
+              <li>
+                <a href="https://pinkilo.com">pinkilo</a>:
+                <ul>
+                  <li>ambition, digitally crafted.</li>
+                  <li>
+                    specializing in software/web consulting & development and
+                    IT architecture.
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
           <li>
-            past: <a href="https://etp.net">Entertainment Technology Partners</a>
-            , web developer
+            <em>past:</em>
             <ul>
+              <li>
+                <a href="https://etp.net">Entertainment Technology Partners</a>
+                : web developer
+                <ul>
               <li>
                 web development, web design, aws, cms development, seo, &
                 analytics
@@ -106,28 +120,45 @@ const Items = async () => {
           </li>
         </ul>
       </li>
+    </ul>
+  </li>
       <li>
-        projects
+        <span className="underline underline-offset-4">projects</span>
         <ul>
           <li>
-            <a href="https://tonysshrimpshack.com">tonysshrimpshack.com</a>: a
-            website to show off my shrimp tank
+            <em>my random websites:</em>
+            <ul>
+              <li>
+                <a href="https://tonysshrimpshack.com">tonysshrimpshack.com</a>
+                : a website to show off my shrimp tank
+              </li>
+              <li>
+                <a href="https://sweettearankings.com">sweettearankings.com</a>
+                : my personal sweet tea rankings
+              </li>
+            </ul>
           </li>
           <li>
-            <a href="https://sweettearankings.com">sweettearankings.com</a>: my
-            personal sweet tea rankings
-          </li>
-          <li>
-            <a href="https://github.com/byanthny/yugo">yugo</a>: a basic dark
-            hugo theme, the first version of this site. v1, maintenance mode
-          </li>
-          <li>
-            <a href="https://github.com/byanthny/.dotfiles">.dotfiles</a>: my
-            dotfiles
+            <em>maintaining:</em>
+            <ul>
+              <li>
+                <a href="https://github.com/byanthny/yugo">yugo</a>: a basic
+                dark hugo theme, the first version of this site
+                <ul>
+                  <li>v1, maintenance mode</li>
+                </ul>
+              </li>
+              <li>
+                <a href="https://github.com/byanthny/.dotfiles">.dotfiles</a>:
+                my dotfiles
+              </li>
+            </ul>
           </li>
           <li>
             <details>
-              <summary>older (2018 - 2022)</summary>
+              <summary>
+                <em>older (2018 - 2022)</em>
+              </summary>
               <ul>
                 <li>
                   2022 -{" "}
@@ -243,7 +274,9 @@ const Items = async () => {
       </li>
       {recent.length > 0 && (
         <li>
-          <Link href="/log">log</Link>
+          <Link href="/log" className="underline underline-offset-4">
+            log
+          </Link>
           <ul>
             {recent.map((entry) => (
               <EntryLink key={entry.slug} entry={entry} />
