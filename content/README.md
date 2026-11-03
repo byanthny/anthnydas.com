@@ -37,7 +37,6 @@ To link entries to projects on the homepage, use these project values:
 - `learning` - learning.anthnydas.com
 - `dotfiles` - .dotfiles repository
 - `tonysshrimpshack` - tonysshrimpshack.com
-- `sweettearankings` - sweettearankings.com
 
 ## MDX Features
 

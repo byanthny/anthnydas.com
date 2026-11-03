@@ -12,10 +12,11 @@ const Items = async () => {
       <li>
         <strong>anthony das</strong>
         <ul>
-          {/* draft, edit me: the one line about what you do and where it's going */}
+          {/* TODO(tony): the one line about what you do and where it's going,
+              in your words. the 10/15 draft named your city; it stays off */}
           <li>
-            software engineer in orlando. fullstack and architecture by day,
-            learning rendering and simulation on the side
+            software engineer. fullstack and architecture by day, learning
+            rendering and simulation on the side
           </li>
           <li>
             b.s. in computer science from <a href="https://jhu.edu">jhu</a>
@@ -31,6 +32,14 @@ const Items = async () => {
       <li>
         <span className="underline underline-offset-4">now</span>
         <ul>
+          <li>
+            {/* TODO(tony): stow in your words. no link until the repo is public */}
+            stow [soon]: a small native macos board for markdown notes and
+            github pull requests
+            <ul>
+              <li>swift, appkit, swiftui</li>
+            </ul>
+          </li>
           <li>
             <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
             : visual notes on algorithms, graphics, and the tools i use
@@ -129,12 +138,8 @@ const Items = async () => {
             <em>my random websites:</em>
             <ul>
               <li>
-                <a href="https://tonysshrimpshack.com">tonysshrimpshack.com</a>
+                <a href="https://www.tonysshrimpshack.com">tonysshrimpshack.com</a>
                 : a website to show off my shrimp tank
-              </li>
-              <li>
-                <a href="https://sweettearankings.com">sweettearankings.com</a>
-                : my personal sweet tea rankings
               </li>
             </ul>
           </li>
@@ -142,10 +147,14 @@ const Items = async () => {
             <em>maintaining:</em>
             <ul>
               <li>
-                <a href="https://github.com/byanthny/yugo">yugo</a>: a basic
-                dark hugo theme, the first version of this site
+                <a href="https://github.com/byanthny/yugo">yugo</a>: basic hugo
+                theme
                 <ul>
-                  <li>v1, maintenance mode</li>
+                  <li>your go to hugo theme</li>
+                  <li>
+                    v1.0.2, maintenance mode &middot;{" "}
+                    <a href="https://yugo-theme.vercel.app">demo</a>
+                  </li>
                 </ul>
               </li>
               <li>
