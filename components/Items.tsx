@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllEntries, getEntriesByProject } from '@/lib/log'
 import EntryLink from './EntryLink'
+import WorkPreview from './WorkPreview'
 
 const Items = async () => {
   const recent = getAllEntries().slice(0, 3)
@@ -9,8 +10,8 @@ const Items = async () => {
 
   return (
     <ul className="list-disc">
-      <li>
-        <strong>anthony das</strong>
+      <li id="about" className="scroll-mt-24">
+        <strong className="heading">anthony das</strong>
         <ul>
           {/* TODO(tony): the one line about what you do and where it's going,
               in your words. the 10/15 draft named your city; it stays off */}
@@ -29,111 +30,58 @@ const Items = async () => {
           </li>
         </ul>
       </li>
-      <li>
-        <span className="underline underline-offset-4">now</span>
+      <li id="projects" className="scroll-mt-24">
+        <span className="heading underline underline-offset-4">projects</span>
         <ul>
           <li>
-            {/* TODO(tony): stow in your words. no link until the repo is public */}
-            stow [soon]: a small native macos board for markdown notes and
-            github pull requests
-            <ul>
-              <li>swift, appkit, swiftui</li>
-            </ul>
-          </li>
-          <li>
-            <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
-            : visual notes on algorithms, graphics, and the tools i use
-            <ul>
-              <li>astro, react, gsap</li>
-              {learningEntries.length > 0 && (
-                <li>
-                  log:
-                  <ul>
-                    {learningEntries.slice(0, 3).map((entry) => (
-                      <EntryLink key={entry.slug} entry={entry} />
-                    ))}
-                  </ul>
-                </li>
-              )}
-            </ul>
-          </li>
-          <li>
-            <a href="https://github.com/byanthny/macropad-rp2040">
-              rp2040 macropad
-            </a>
-            : adafruit rp2040 macropad kit programmed with rust
-            <ul>
-              <li>rust</li>
-              {macropadEntries.length > 0 && (
-                <li>
-                  log:
-                  <ul>
-                    {macropadEntries.slice(0, 3).map((entry) => (
-                      <EntryLink key={entry.slug} entry={entry} />
-                    ))}
-                  </ul>
-                </li>
-              )}
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <span className="underline underline-offset-4">work</span>
-        <ul>
-          <li>
-            <em>current:</em>
+            <em>now:</em>
             <ul>
               <li>
-                <a href="https://pinkilo.com">pinkilo</a>:
+                {/* TODO(tony): stow in your words. no link until the repo is public */}
+                stow [soon]: a small native macos board for markdown notes and
+                github pull requests
                 <ul>
-                  <li>ambition, digitally crafted.</li>
-                  <li>
-                    specializing in software/web consulting & development and
-                    IT architecture.
-                  </li>
+                  <li>swift, appkit, swiftui</li>
+                </ul>
+              </li>
+              <li>
+                <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
+                : visual notes on algorithms, graphics, and the tools i use
+                <ul>
+                  <li>astro, react, gsap</li>
+                  {learningEntries.length > 0 && (
+                    <li>
+                      log:
+                      <ul>
+                        {learningEntries.slice(0, 3).map((entry) => (
+                          <EntryLink key={entry.slug} entry={entry} />
+                        ))}
+                      </ul>
+                    </li>
+                  )}
+                </ul>
+              </li>
+              <li>
+                <a href="https://github.com/byanthny/macropad-rp2040">
+                  rp2040 macropad
+                </a>
+                : adafruit rp2040 macropad kit programmed with rust
+                <ul>
+                  <li>rust</li>
+                  {macropadEntries.length > 0 && (
+                    <li>
+                      log:
+                      <ul>
+                        {macropadEntries.slice(0, 3).map((entry) => (
+                          <EntryLink key={entry.slug} entry={entry} />
+                        ))}
+                      </ul>
+                    </li>
+                  )}
                 </ul>
               </li>
             </ul>
           </li>
-          <li>
-            <em>past:</em>
-            <ul>
-              <li>
-                <a href="https://etp.net">Entertainment Technology Partners</a>
-                : web developer
-                <ul>
-              <li>
-                web development, web design, aws, cms development, seo, &
-                analytics
-              </li>
-              <li>computer vision, ai & edge devices</li>
-              <li>
-                notable work:
-                <ul>
-                  <li>
-                    <a href="https://eventeq.com">eventeq.com</a>: Next.js,
-                    TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                  </li>
-                  <li>
-                    <a href="https://etp.net">etp.net</a>: Next.js, TypeScript,
-                    TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                  </li>
-                  <li>
-                    <a href="https://pixl.live">pixl.live</a>: Next.js,
-                    TypeScript, TailwindCSS, Vercel, Sanity, Motion/Framer-Motion
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-      <li>
-        <span className="underline underline-offset-4">projects</span>
-        <ul>
           <li>
             <em>my random websites:</em>
             <ul>
@@ -281,9 +229,93 @@ const Items = async () => {
           </li>
         </ul>
       </li>
+      <li id="work" className="scroll-mt-24">
+        <span className="heading underline underline-offset-4">work</span>
+        <ul>
+          <li>
+            <em>current:</em>
+            <ul>
+              <li>
+                <a href="https://pinkilo.com">pinkilo</a>:
+                <ul>
+                  <li>ambition, digitally crafted.</li>
+                  <li>
+                    specializing in software/web consulting & development and
+                    IT architecture.
+                  </li>
+                  <li>
+                    <a href="https://www.aquaridex.com">aquaridex</a>: explore
+                    and manage aquatic animal collections, with species
+                    profiles, care guides and water parameters
+                  </li>
+                  <li>
+                    <a href="https://www.masteryaquaria.com">mastery aquaria</a>
+                    : field-grown botanicals, shrimp-safe goods and a species
+                    reference
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <em>past:</em>
+            <ul>
+              <li>
+                <a href="https://etp.net">Entertainment Technology Partners</a>
+                : web developer
+                <ul>
+                  <li>
+                    web development, web design, aws, cms development, seo, &
+                    analytics
+                  </li>
+                  <li>
+                    computer vision, ai & edge devices
+                    <ul>
+                      <li>
+                        <a href="https://www.knw.net">knw.net</a>: audience
+                        intelligence for live events. the dashboard is still
+                        mostly my work; the public site isn&apos;t my design
+                        anymore
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    notable work{" "}
+                    <span className="text-neutral-400">
+                      (the live sites have changed since my work there
+                      <span className="hidden lg:[@media(hover:hover)]:inline">
+                        ; hover a link to see them as i shipped them
+                      </span>
+                      )
+                    </span>
+                    :
+                    <ul>
+                      <li>
+                        <WorkPreview href="https://eventeq.com" label="eventeq.com" site="eventeq" shots={['home', 'work', 'led']} />
+                        : Next.js, TypeScript, TailwindCSS, Vercel, Sanity,
+                        Motion/Framer-Motion
+                      </li>
+                      <li>
+                        <WorkPreview href="https://etp.net" label="etp.net" site="etp" shots={['home', 'about', 'careers']} />
+                        : Next.js, TypeScript, TailwindCSS, Vercel, Sanity,
+                        Motion/Framer-Motion
+                      </li>
+                      <li>
+                        <WorkPreview href="https://pixl.live" label="pixl.live" site="pixl" shots={['home', 'av-hire', 'portfolio']} />
+                        : Next.js, TypeScript, TailwindCSS, Vercel, Sanity,
+                        Motion/Framer-Motion
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
       {recent.length > 0 && (
-        <li>
-          <Link href="/log" className="underline underline-offset-4">
+        <li id="log" className="scroll-mt-24">
+          <Link href="/log" className="heading underline underline-offset-4">
             log
           </Link>
           <ul>
