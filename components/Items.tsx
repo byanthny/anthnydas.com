@@ -13,8 +13,6 @@ const Items = async () => {
       <li id="about" className="scroll-mt-24">
         <strong className="heading">anthony das</strong>
         <ul>
-          {/* TODO(tony): the one line about what you do and where it's going,
-              in your words. the 10/15 draft named your city; it stays off */}
           <li>
             software engineer. fullstack and architecture by day, learning
             rendering and simulation on the side
@@ -37,7 +35,7 @@ const Items = async () => {
             <em>now:</em>
             <ul>
               <li>
-                {/* TODO(tony): stow in your words. no link until the repo is public */}
+                {/* link it once the stow repo is public */}
                 stow [soon]: a small native macos board for markdown notes and
                 github pull requests
                 <ul>
