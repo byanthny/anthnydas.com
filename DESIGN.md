@@ -72,8 +72,14 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
 - Status goes in brackets after the name: `[soon]`, `[unfinished]`, `[no public repo]`.
 - Inline rows (resume · email · github · linkedin) are separated by a middle dot (`&middot;`).
 - A side note goes in parentheses in `text-neutral-400`.
-- Long or old groups fold into `<details>`. The `summary` is cyan, has no triangle, reads
-  ` +` when closed and ` -` when open, and keeps the item's bullet.
+- Long or old groups fold into `<details>`. The `summary` is cyan, has no triangle and keeps
+  the item's bullet. A + follows it and turns 45° into × while the group is open.
+- The lists that carry links have `.site-list` (the home page and `/log`), which turns on the
+  link and bullet motion below.
+- One of your own projects can use its icon as its bullet: `.icon-bullet` on the `li`, with
+  `--icon` set to a file in `public/icons/`, drawn at 14px.
+- Site info ends with "last updated" and the build's date (UTC, so no time zone shows),
+  plus a link to its commit on Vercel builds.
 
 ## The "on this page" rail
 
@@ -87,9 +93,10 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
 - Jumps scroll smoothly (`scroll-behavior: smooth`), and jump instantly under reduced motion.
 - It follows learning.anthnydas.com's rail. The home page has one; log pages don't.
 
-## Hover previews (`components/WorkPreview.tsx`)
+## Hover cards (`components/HoverCard.tsx`)
 
-- A link with a small card of screenshots that appears under it on hover or keyboard focus.
+- A small card that appears under a link on hover or keyboard focus. Two things use it:
+  `WorkPreview` (screenshots of past work) and `ProjectPeek` (a drawn loop for a project).
 - The card exists only on `lg` screens that can hover (`lg:[@media(hover:hover)]:flex`).
   Everywhere else it's `hidden` and the link is a plain link. Any hint that mentions hovering
   is hidden the same way.
@@ -97,29 +104,40 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
   The link carries the meaning.
 - Look: `absolute left-0 top-full mt-2 z-40`,
   `rounded-lg border border-neutral-700/50 bg-neutral-900/95 p-2 shadow-xl shadow-black/50`,
-  shots `rounded` with `gap-2`.
-- Shots are 16:9 jpgs of each page's first screen in `public/work/<site>/`, drawn at 176×99,
-  captured once and dated in the component.
-- It fades in with `transition-opacity duration-150` (`motion-reduce:transition-none`). CSS
-  only, no JavaScript.
+  contents `rounded` with `gap-2`.
+- Screenshots are 16:9 jpgs of each page's first screen in `public/work/<site>/`, drawn at
+  176×99, captured once and dated in the component.
+- Peeks are 240×135 drawings in CSS and SVG (`components/peeks/`), never screenshots of a
+  project that hasn't launched. Their animations stay paused until the card is open. A
+  project with no link yet gets its peek on the word, which has a dotted underline only where
+  the card can show.
+- The card fades in with `transition-opacity duration-150` (`motion-reduce:transition-none`).
 
 ## Motion
 
-- Small and quick: fades and short transitions of 150-200ms. No bounces or springs, and nothing
-  moves on its own when the page loads.
-- Every transition has a reduced-motion fallback: `motion-reduce:transition-none` on the
-  element, or a `@media (prefers-reduced-motion: reduce)` rule in `globals.css`.
-- CSS first. This site loads no animation library.
+- One curve for every small move, `--ease-out: cubic-bezier(0.33, 1, 0.68, 1)`
+  (easeOutCubic, in `globals.css`), over 150-220ms. No bounces or springs.
+- What moves: in a `.site-list`, a 1px underline draws in under a link on hover or focus, and
+  links that leave the site show a small ↗. The bullet of the item under the cursor turns cyan.
+  The details toggle turns, and an opened group eases in 4px. The nav name's letters lift one
+  after another, the mortarboard after "jhu" tosses, and peeks loop while their card is open.
+- Only one thing moves on its own: the nav's cyan dot pulses once when the site opens.
+- Reduced motion: one `@media (prefers-reduced-motion: reduce)` rule in `globals.css` turns off
+  every animation and transition. Hover states still change, only without the movement.
+- CSS first. This site loads no animation library. The merge-sort peek is the only animation
+  in JavaScript, and it runs only while its card is open.
 
 ## Marks and images
 
-- The mark is a bold white "ad" on black, drawn by `app/icon.tsx` (32px, 6px corners) and
-  `app/apple-icon.tsx` (180px).
-- The share card (`app/opengraph-image.tsx`) is black with the name in 120px bold, the tagline
-  in `#a3a3a3` and a 160×8 `#22d3ee` bar.
-- There is no icon set. Links are words.
-- Only marks the site's owner owns appear as images. Schools, employers and clients are named
-  in text, not shown by logo.
+- The mark is the cyan dot and a white "ad" on black, drawn by `app/icon.tsx` (32px, 6px
+  corners) and `app/apple-icon.tsx` (180px). The nav puts the same 7px dot before the name.
+- The share card (`app/opengraph-image.tsx`) is black with the dot and the name in 120px bold,
+  then the tagline in `#a3a3a3`. Log cards lead their header line with the dot.
+- There is no icon set. Links are words. The one drawing in the copy is the mortarboard after
+  "jhu", made for the site.
+- Only marks the site's owner owns appear as images: the project icons in `public/icons/` and
+  the 88×31 buttons in `public/buttons/` (static SVGs others may hotlink). Schools, employers
+  and clients are named in text, not shown by logo.
 
 ## Using this on another site
 
