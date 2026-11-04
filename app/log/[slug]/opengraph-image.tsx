@@ -45,7 +45,17 @@ export default async function EntryOpengraphImage({
           padding: "80px",
         }}
       >
-        <div style={{ display: "flex", fontSize: 32, color: "#a3a3a3" }}>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 32, color: "#a3a3a3" }}>
+          <div
+            style={{
+              width: 14,
+              height: 14,
+              marginTop: 4,
+              marginRight: 14,
+              borderRadius: 9999,
+              backgroundColor: "#22d3ee",
+            }}
+          />
           {siteName} / log
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
