@@ -7,5 +7,34 @@ ul {
 }
 
 a {
-  @apply text-cyan-500;
+  @apply text-cyan-400;
+}
+
+/* the page's section headings: the name, projects, work, log */
+.heading {
+  @apply text-lg;
+}
+
+/* the side "on this page" links glide to their section, unless motion is reduced */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* a collapsible list item: keep the bullet, drop the triangle, show + / - after the text */
+summary {
+  @apply cursor-pointer list-none text-cyan-400;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::after {
+  content: " +";
+}
+details[open] > summary::after {
+  content: " -";
 }

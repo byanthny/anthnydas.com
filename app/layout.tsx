@@ -58,9 +58,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-black text-white">
         <NavBar />
-        <div className="px-[25%] pt-20">
-
-        {children}
+        <div className="px-5 sm:px-[10%] md:px-[16%] lg:px-[20%] pt-20">
+          {/* the content sits a little inside the nav's edges */}
+          <div className="px-6 sm:px-8">{children}</div>
         </div>
         <Analytics />
       </body>

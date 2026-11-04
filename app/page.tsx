@@ -1,4 +1,5 @@
 import Items from "@/components/Items"
+import PageToc from "@/components/PageToc"
 import type { Metadata } from "next"
 import { author, siteDescription, siteUrl, socials } from "@/lib/site"
 
@@ -30,6 +31,7 @@ export default function Home() {
       />
       <h1 className="sr-only">{author}</h1>
       <Items />
+      <PageToc />
     </main>
   )
 }

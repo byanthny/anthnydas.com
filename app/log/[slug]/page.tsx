@@ -91,7 +91,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
         <time className="text-neutral-400 text-sm" dateTime={date}>
           {date}
         </time>
-        <div className="mt-8 pl-4 prose prose-invert prose-cyan max-w-none">
+        <div className="mt-8 pl-4 prose prose-invert prose-cyan prose-a:text-cyan-400 max-w-none">
           {await MDXRemote({ source: content })}
         </div>
       </article>
@@ -101,6 +101,9 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
     </div>
   )
 }
+
+// only the slugs from the build exist; anything else (drafts included) is a 404
+export const dynamicParams = false
 
 export function generateStaticParams() {
   const slugs = getEntrySlugs()
