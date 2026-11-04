@@ -35,9 +35,8 @@ const Items = async () => {
             <em>now:</em>
             <ul>
               <li>
-                {/* link it once the stow repo is public */}
-                stow [soon]: a small native macos board for markdown notes and
-                github pull requests
+                <a href="https://stow.byanthny.com">stow</a> [alpha]: a quiet
+                macos board for markdown notes and github pull requests
                 <ul>
                   <li>swift, appkit, swiftui</li>
                 </ul>
