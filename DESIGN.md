@@ -49,9 +49,10 @@ CSS can match them. Tailwind v4 moved its palette to oklch, so its `cyan-400` is
 
 - The nav and the content share one side padding: `px-5` (20px) on phones, then
   `sm:px-[10%]`, `md:px-[16%]` and `lg:px-[20%]`. Change both together.
-- Inside that edge, the nav bar pads its text by `px-6 py-3` (24px / 12px) and the content by
-  `px-6 sm:px-8` (24px / 32px). On phones, copy starts where the nav's text starts. From `sm`
-  up it sits about 8px further in.
+- Inside that edge, the nav bar pads its text by `px-6 py-3` (24px / 12px). The content pads a
+  touch less, `px-5` (20px) at every size, so it sits just inside the nav's outline and a little
+  outside the nav's text. The page reads as nested under the nav. Keep the content's side padding
+  one step below the nav's; never equal or wider.
 - The content starts at `pt-20` (80px), below the fixed nav. Section anchors use
   `scroll-mt-24` (96px) so a jump doesn't land under the nav.
 - Every `ul` gets `pl-4 pt-2 pb-3`: a 16px indent, 8px above and 12px below. Spacing comes from
