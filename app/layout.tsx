@@ -59,8 +59,9 @@ export default function RootLayout({
       <body className="bg-black text-white">
         <NavBar />
         <div className="px-5 sm:px-[10%] md:px-[16%] lg:px-[20%] pt-20">
-          {/* the content sits a little inside the nav's edges */}
-          <div className="px-6 sm:px-8">{children}</div>
+          {/* nested: the content pads a touch less than the nav (20px vs 24px), so it sits just
+              inside the nav's outline and a little outside its text */}
+          <div className="px-5">{children}</div>
         </div>
         <Analytics />
       </body>
