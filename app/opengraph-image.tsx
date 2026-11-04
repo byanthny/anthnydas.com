@@ -23,21 +23,25 @@ export default function OpengraphImage() {
           padding: "80px",
         }}
       >
-        <div style={{ fontSize: 120, fontWeight: 700, letterSpacing: "-4px" }}>
-          {siteName}
+        {/* the mark's cyan dot leads the name */}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              marginTop: 14,
+              marginRight: 32,
+              borderRadius: 9999,
+              backgroundColor: "#22d3ee",
+            }}
+          />
+          <div style={{ fontSize: 120, fontWeight: 700, letterSpacing: "-4px" }}>
+            {siteName}
+          </div>
         </div>
-        <div style={{ fontSize: 44, color: "#a3a3a3", marginTop: 8 }}>
+        <div style={{ fontSize: 44, color: "#a3a3a3", marginTop: 8, marginLeft: 72 }}>
           {tagline}
         </div>
-        <div
-          style={{
-            marginTop: 48,
-            width: 160,
-            height: 8,
-            backgroundColor: "#22d3ee",
-            borderRadius: 4,
-          }}
-        />
       </div>
     ),
     { ...size }

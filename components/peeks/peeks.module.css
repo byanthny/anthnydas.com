@@ -1,0 +1,226 @@
+/* the drawings inside the project cards (components/ProjectPeek.tsx), for projects without a
+   site. each is a 240x135 frame, and its animations wait until the card is open */
+.art {
+  position: relative;
+  display: block;
+  width: 240px;
+  height: 135px;
+  overflow: hidden;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 0.25rem;
+  background: theme("colors.neutral.950");
+}
+.art * {
+  animation-play-state: paused !important;
+}
+:global(.group):hover .art *,
+:global(.group):focus-within .art * {
+  animation-play-state: running !important;
+}
+
+/* stow: a note lands, a pull request merges */
+.win {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 17px;
+  padding: 0 7px;
+  border-bottom: 1px solid theme("colors.neutral.800");
+}
+.win i {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: theme("colors.neutral.700");
+}
+.win span {
+  margin-left: auto;
+  font: 9px/1 theme("fontFamily.mono");
+  color: theme("colors.neutral.500");
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  padding: 7px;
+}
+.cols b {
+  display: block;
+  margin-bottom: 5px;
+  font: 600 9px/1 theme("fontFamily.sans");
+  color: theme("colors.neutral.500");
+}
+.card {
+  display: block;
+  margin-bottom: 5px;
+  padding: 6px;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 4px;
+  background: theme("colors.neutral.900");
+}
+.heading {
+  display: block;
+  width: 58%;
+  height: 5px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: theme("colors.neutral.300");
+}
+.line {
+  display: block;
+  width: 86%;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 2px;
+  background: theme("colors.neutral.700");
+}
+.short {
+  width: 58%;
+}
+.typing {
+  animation: typing 4.4s steps(14) -3s infinite;
+}
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  45%,
+  100% {
+    width: 86%;
+  }
+}
+.landing {
+  animation: landing 4.4s ease-out -3s infinite;
+}
+@keyframes landing {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  14%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pr .line {
+  margin-top: 0;
+}
+.state {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid theme("colors.cyan.400");
+  border-radius: 9999px;
+}
+.merging {
+  animation: merging 4.4s -3s infinite;
+}
+@keyframes merging {
+  0%,
+  50% {
+    background: transparent;
+  }
+  58%,
+  100% {
+    background: theme("colors.cyan.400");
+  }
+}
+
+/* the macropad: twelve keys light in a wave, the knob turns */
+.pad {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+}
+.board {
+  display: block;
+  flex: none;
+  width: 80px;
+  padding: 6px;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 6px;
+  background: theme("colors.neutral.900");
+}
+.top {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.oled {
+  flex: 1;
+  height: 18px;
+  padding-left: 3px;
+  overflow: hidden;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 2px;
+  background: theme("colors.black");
+  font: 7px/16px theme("fontFamily.mono");
+  color: theme("colors.cyan.400");
+  white-space: nowrap;
+}
+.knob {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 9999px;
+  background: theme("colors.neutral.800");
+  animation: spin 6s linear infinite;
+}
+.knob::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 2px;
+  height: 6px;
+  border-radius: 1px;
+  background: theme("colors.neutral.300");
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.keys i {
+  aspect-ratio: 1;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 3px;
+  background: theme("colors.neutral.800");
+  animation: key 2.4s ease-out infinite;
+  animation-delay: calc(var(--d) * 0.13s - 2.4s);
+}
+@keyframes key {
+  0%,
+  30%,
+  100% {
+    background: theme("colors.neutral.800");
+    box-shadow: none;
+  }
+  8% {
+    background: theme("colors.cyan.400");
+    box-shadow: 0 0 8px rgb(34 211 238 / 0.55);
+  }
+}
+.code {
+  display: block;
+  font: 9px/1.55 theme("fontFamily.mono");
+  color: theme("colors.neutral.400");
+  white-space: pre;
+}
+.code b {
+  font-weight: 400;
+  color: theme("colors.cyan.400");
+}
