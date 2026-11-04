@@ -56,8 +56,9 @@ details[open] > ul {
   }
 }
 
-/* links in the site's lists: a cyan underline draws in on hover or focus */
-.site-list a:not(.heading) {
+/* links in the site's lists: a cyan underline draws in on hover or focus. .plain opts a link
+   out of the underline and the arrow (the 88x31 buttons) */
+.site-list a:not(.heading):not(.plain) {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -66,8 +67,8 @@ details[open] > ul {
   box-decoration-break: clone;
   transition: background-size 200ms var(--ease-out);
 }
-.site-list a:not(.heading):hover,
-.site-list a:not(.heading):focus-visible {
+.site-list a:not(.heading):not(.plain):hover,
+.site-list a:not(.heading):not(.plain):focus-visible {
   background-size: 100% 1px;
   text-decoration-line: none;
 }
@@ -78,7 +79,7 @@ details[open] > ul {
 
 /* links that leave the site show a small grey arrow, like learning's nav. grey, so it doesn't
    get lost in the cyan */
-.site-list a[href^="http"]::after {
+.site-list a[href^="http"]:not(.plain)::after {
   content: "\2197";
   content: "\2197" / "";
   position: absolute;
@@ -94,8 +95,8 @@ details[open] > ul {
     opacity 150ms,
     transform 200ms var(--ease-out);
 }
-.site-list a[href^="http"]:hover::after,
-.site-list a[href^="http"]:focus-visible::after {
+.site-list a[href^="http"]:not(.plain):hover::after,
+.site-list a[href^="http"]:not(.plain):focus-visible::after {
   opacity: 1;
   transform: none;
 }

@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getAllEntries, getEntriesByProject } from '@/lib/log'
 import EntryLink from './EntryLink'
@@ -9,6 +10,14 @@ import WorkPreview from './WorkPreview'
 
 // a project's own icon as its bullet (.icon-bullet in globals.css). only marks i own
 const icon = (src: string) => ({ '--icon': `url(${src})` }) as CSSProperties
+
+// 88x31 buttons for my sites, old-web style. the first one is for anyone linking here
+const buttons = [
+  { src: '/buttons/anthnydas.svg', href: '/', alt: 'anthnydas.com' },
+  { src: '/buttons/learning.svg', href: 'https://learning.anthnydas.com', alt: 'learning.anthnydas.com' },
+  { src: '/buttons/shrimpshack.svg', href: 'https://www.tonysshrimpshack.com', alt: "tony's shrimp shack" },
+  { src: '/buttons/yugo.svg', href: 'https://yugo-theme.vercel.app', alt: 'yugo, a hugo theme' },
+]
 
 const Items = async () => {
   const recent = getAllEntries().slice(0, 3)
@@ -363,6 +372,16 @@ const Items = async () => {
           </li>
           <li>
             built with <ShortLink href="https://vercel.com/">Next.js & Vercel</ShortLink>.
+          </li>
+          <li>
+            88&times;31s for my sites (hotlink mine if you want):
+            <span className="flex flex-wrap gap-2 pb-1 pt-2">
+              {buttons.map((button) => (
+                <a key={button.src} href={button.href} className="plain">
+                  <Image src={button.src} alt={button.alt} width={88} height={31} unoptimized />
+                </a>
+              ))}
+            </span>
           </li>
           <li className="text-neutral-400">
             last updated {updated}
