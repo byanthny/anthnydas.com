@@ -10,7 +10,8 @@ CSS can match them. Tailwind v4 moved its palette to oklch, so its `cyan-400` is
 
 ## The short version
 
-- Black page, white text, cyan links. One accent color and no gradients.
+- Black page, white text, cyan links. Cyan is the one accent, with no gradients. Amber marks
+  only the bullet under the cursor.
 - Lowercase, plain copy, one line per fact.
 - System fonts and local images. Nothing loads from another origin except Vercel Analytics.
 - Everything works at 375px wide. Hover can add things, but nothing lives only behind a hover.
@@ -23,6 +24,7 @@ CSS can match them. Tailwind v4 moved its palette to oklch, so its `cyan-400` is
 | page | `bg-black` | `#000000` | the body |
 | text | `text-white` | `#ffffff` | copy, the name |
 | link | `text-cyan-400` | `#22d3ee` | every link (set on `a` in `globals.css`), `summary` toggles, the current rail entry |
+| hover bullet | `amber-400` | `#fbbf24` | the bullet of the item under the cursor, and nothing else. not cyan, so it doesn't get lost among the links (learning's mark uses the same amber) |
 | nav links | `text-neutral-300`, `hover:text-white` | `#d4d4d4` | the nav's right side |
 | quiet | `text-neutral-400` | `#a3a3a3` | asides in parentheses, dates, rail links, the share card's tagline |
 | quieter | `text-neutral-500` | `#737373` | small labels ("on this page") |
@@ -96,7 +98,8 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
 ## Hover cards (`components/HoverCard.tsx`)
 
 - A small card that appears under a link on hover or keyboard focus. Two things use it:
-  `WorkPreview` (screenshots of past work) and `ProjectPeek` (a drawn loop for a project).
+  `WorkPreview` (screenshots of past work) and `ProjectPeek` (a project's own site, or a
+  drawing when it has none).
 - The card exists only on `lg` screens that can hover (`lg:[@media(hover:hover)]:flex`).
   Everywhere else it's `hidden` and the link is a plain link. Any hint that mentions hovering
   is hidden the same way.
@@ -107,37 +110,45 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
   contents `rounded` with `gap-2`.
 - Screenshots are 16:9 jpgs of each page's first screen in `public/work/<site>/`, drawn at
   176×99, captured once and dated in the component.
-- Peeks are 240×135 drawings in CSS and SVG (`components/peeks/`), never screenshots of a
-  project that hasn't launched. Their animations stay paused until the card is open. A
-  project with no link yet gets its peek on the word, which has a dotted underline only where
-  the card can show.
+- A project with a site shows that site: its homepage as a 320×180 shot from
+  `public/projects/` (dated in `components/peeks/SiteCard.tsx`), with its short address under
+  it. The card shows the whole homepage, not one section of it.
+- A project without a site gets a 240×135 drawing in CSS (`components/peeks/`): the macropad,
+  and stow until it launches. A drawing shows the real thing (the device, the app's layout),
+  never a cartoon stand-in. Its animations stay paused until the card is open.
+- A project with no link yet gets its card on the word, which has a dotted underline only
+  where the card can show.
 - The card fades in with `transition-opacity duration-150` (`motion-reduce:transition-none`).
 
 ## Motion
 
 - One curve for every small move, `--ease-out: cubic-bezier(0.33, 1, 0.68, 1)`
   (easeOutCubic, in `globals.css`), over 150-220ms. No bounces or springs.
-- What moves: in a `.site-list`, a 1px underline draws in under a link on hover or focus, and
-  links that leave the site show a small ↗. The bullet of the item under the cursor turns cyan.
-  The details toggle turns, and an opened group eases in 4px. The nav name's letters lift one
-  after another, the mortarboard after "jhu" tosses, and peeks loop while their card is open.
-- Only one thing moves on its own: the nav's cyan dot pulses once when the site opens.
+- What moves, all on hover or focus in a `.site-list`:
+  - a 1px underline draws in under the link
+  - links that leave the site show a small ↗ in `neutral-300`. It's grey, like learning's nav
+    arrow, so it doesn't get lost in the cyan
+  - a `ShortLink` shows where it goes in a small chip under it: the address without `https://`
+    or `www.`, or the email address. The chip exists only while hovered (on screens that can
+    hover) or focused, so a long address never widens the page
+  - the bullet of the item under the cursor turns amber
+  - the details toggle turns and an opened group eases in 4px
+  - the mortarboard after "jhu" tosses, and drawings loop while their card is open
+- Nothing moves on its own when the page loads.
 - Reduced motion: one `@media (prefers-reduced-motion: reduce)` rule in `globals.css` turns off
   every animation and transition. Hover states still change, only without the movement.
-- CSS first. This site loads no animation library. The merge-sort peek is the only animation
-  in JavaScript, and it runs only while its card is open.
+- CSS only. This site loads no animation library and animates nothing in JavaScript.
 
 ## Marks and images
 
 - The mark is the cyan dot and a white "ad" on black, drawn by `app/icon.tsx` (32px, 6px
-  corners) and `app/apple-icon.tsx` (180px). The nav puts the same 7px dot before the name.
+  corners) and `app/apple-icon.tsx` (180px). The nav stays plain: just the name, no dot.
 - The share card (`app/opengraph-image.tsx`) is black with the dot and the name in 120px bold,
   then the tagline in `#a3a3a3`. Log cards lead their header line with the dot.
 - There is no icon set. Links are words. The one drawing in the copy is the mortarboard after
   "jhu", made for the site.
-- Only marks the site's owner owns appear as images: the project icons in `public/icons/` and
-  the 88×31 buttons in `public/buttons/` (static SVGs others may hotlink). Schools, employers
-  and clients are named in text, not shown by logo.
+- Only marks the site's owner owns appear as images: the project icons in `public/icons/`.
+  Schools, employers and clients are named in text, not shown by logo.
 
 ## Using this on another site
 
