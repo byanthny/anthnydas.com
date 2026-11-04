@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31">
+  <rect width="88" height="31" fill="#0a0a0a"/>
+  <path d="M.5 30.5V.5h87" fill="none" stroke="#a3a3a3"/>
+  <path d="M1 30.5h86.5V1" fill="none" stroke="#404040"/>
+  <text x="8" y="13.5" font-family="Verdana, Tahoma, sans-serif" font-size="7.5" fill="#ffffff">tony's</text>
+  <text x="8" y="24.5" font-family="Verdana, Tahoma, sans-serif" font-size="9" font-weight="700" fill="#f0a35e">shrimp <tspan fill="#ffffff">shack</tspan></text>
+</svg>

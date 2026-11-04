@@ -147,8 +147,10 @@ the name on the left (bold, white) and the links on the right (`gap-3`).
   then the tagline in `#a3a3a3`. Log cards lead their header line with the dot.
 - There is no icon set. Links are words. The one drawing in the copy is the mortarboard after
   "jhu", made for the site.
-- Only marks the site's owner owns appear as images: the project icons in `public/icons/`.
-  Schools, employers and clients are named in text, not shown by logo.
+- Only marks the site's owner owns appear as images: the project icons in `public/icons/` and
+  the 88×31 buttons in `public/buttons/` (static SVGs others may hotlink; their links carry
+  `.plain`, which keeps the underline and arrow off them). Schools, employers and clients are
+  named in text, not shown by logo.
 
 ## Using this on another site
 
