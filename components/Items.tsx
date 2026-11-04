@@ -1,15 +1,36 @@
+import type { CSSProperties } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getAllEntries, getEntriesByProject } from '@/lib/log'
 import EntryLink from './EntryLink'
+import Mortarboard from './Mortarboard'
+import ProjectPeek from './ProjectPeek'
 import WorkPreview from './WorkPreview'
+
+// a project's own icon as its bullet (.icon-bullet in globals.css). only marks i own
+const icon = (src: string) => ({ '--icon': `url(${src})` }) as CSSProperties
+
+// 88x31 buttons for my sites, old-web style. the first one is for anyone linking here
+const buttons = [
+  { src: '/buttons/anthnydas.svg', href: '/', alt: 'anthnydas.com' },
+  { src: '/buttons/learning.svg', href: 'https://learning.anthnydas.com', alt: 'learning.anthnydas.com' },
+  { src: '/buttons/shrimpshack.svg', href: 'https://www.tonysshrimpshack.com', alt: "tony's shrimp shack" },
+  { src: '/buttons/yugo.svg', href: 'https://yugo-theme.vercel.app', alt: 'yugo, a hugo theme' },
+]
 
 const Items = async () => {
   const recent = getAllEntries().slice(0, 3)
   const learningEntries = await getEntriesByProject('learning')
   const macropadEntries = await getEntriesByProject('macropad-rp2040')
 
+  // "last updated": the day this build ran (utc, so no time zone shows) and its commit
+  const updated = new Date()
+    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+    .toLowerCase()
+  const commit = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7)
+
   return (
-    <ul className="list-disc">
+    <ul className="list-disc site-list">
       <li id="about" className="scroll-mt-24">
         <strong className="heading">anthony das</strong>
         <ul>
@@ -18,7 +39,11 @@ const Items = async () => {
             rendering and simulation on the side
           </li>
           <li>
-            b.s. in computer science from <a href="https://jhu.edu">jhu</a>
+            b.s. in computer science from{" "}
+            <span className="jhu">
+              <a href="https://jhu.edu">jhu</a>
+              <Mortarboard />
+            </span>
           </li>
           <li>
             <a href="/resume.pdf">resume</a> &middot;{" "}
@@ -35,15 +60,19 @@ const Items = async () => {
             <em>now:</em>
             <ul>
               <li>
-                {/* link it once the stow repo is public */}
-                stow [soon]: a small native macos board for markdown notes and
-                github pull requests
+                {/* link it once the stow repo is public (add href to the peek) */}
+                <ProjectPeek label="stow" art="stow" /> [soon]: a small native
+                macos board for markdown notes and github pull requests
                 <ul>
                   <li>swift, appkit, swiftui</li>
                 </ul>
               </li>
-              <li>
-                <a href="https://learning.anthnydas.com">learning.anthnydas.com</a>
+              <li className="icon-bullet" style={icon('/icons/learning.svg')}>
+                <ProjectPeek
+                  href="https://learning.anthnydas.com"
+                  label="learning.anthnydas.com"
+                  art="learning"
+                />
                 : visual notes on algorithms, graphics, and the tools i use
                 <ul>
                   <li>astro, react, gsap</li>
@@ -60,9 +89,11 @@ const Items = async () => {
                 </ul>
               </li>
               <li>
-                <a href="https://github.com/byanthny/macropad-rp2040">
-                  rp2040 macropad
-                </a>
+                <ProjectPeek
+                  href="https://github.com/byanthny/macropad-rp2040"
+                  label="rp2040 macropad"
+                  art="macropad"
+                />
                 : adafruit rp2040 macropad kit programmed with rust
                 <ul>
                   <li>rust</li>
@@ -83,8 +114,12 @@ const Items = async () => {
           <li>
             <em>my random websites:</em>
             <ul>
-              <li>
-                <a href="https://www.tonysshrimpshack.com">tonysshrimpshack.com</a>
+              <li className="icon-bullet" style={icon('/icons/shrimpshack.svg')}>
+                <ProjectPeek
+                  href="https://www.tonysshrimpshack.com"
+                  label="tonysshrimpshack.com"
+                  art="shrimp"
+                />
                 : a website to show off my shrimp tank
               </li>
             </ul>
@@ -93,8 +128,8 @@ const Items = async () => {
             <em>maintaining:</em>
             <ul>
               <li>
-                <a href="https://github.com/byanthny/yugo">yugo</a>: basic hugo
-                theme
+                <ProjectPeek href="https://github.com/byanthny/yugo" label="yugo" art="yugo" />
+                : basic hugo theme
                 <ul>
                   <li>your go to hugo theme</li>
                   <li>
@@ -233,7 +268,7 @@ const Items = async () => {
           <li>
             <em>current:</em>
             <ul>
-              <li>
+              <li className="icon-bullet" style={icon('/icons/pinkilo.png')}>
                 <a href="https://pinkilo.com">pinkilo</a>:
                 <ul>
                   <li>ambition, digitally crafted.</li>
@@ -241,12 +276,12 @@ const Items = async () => {
                     specializing in software/web consulting & development and
                     IT architecture.
                   </li>
-                  <li>
+                  <li className="icon-bullet" style={icon('/icons/aquaridex.png')}>
                     <a href="https://www.aquaridex.com">aquaridex</a>: explore
                     and manage aquatic animal collections, with species
                     profiles, care guides and water parameters
                   </li>
-                  <li>
+                  <li className="icon-bullet" style={icon('/icons/masteryaquaria.svg')}>
                     <a href="https://www.masteryaquaria.com">mastery aquaria</a>
                     : field-grown botanicals, shrimp-safe goods and a species
                     reference
@@ -331,6 +366,25 @@ const Items = async () => {
           </li>
           <li>
             built with <a href="https://vercel.com/">Next.js & Vercel</a>.
+          </li>
+          <li>
+            88&times;31s for my sites (hotlink mine if you want):
+            <span className="flex flex-wrap gap-2 pb-1 pt-2">
+              {buttons.map((button) => (
+                <a key={button.src} href={button.href} className="plain">
+                  <Image src={button.src} alt={button.alt} width={88} height={31} unoptimized />
+                </a>
+              ))}
+            </span>
+          </li>
+          <li className="text-neutral-400">
+            last updated {updated}
+            {commit && (
+              <>
+                {" "}&middot;{" "}
+                <a href={`https://github.com/byanthny/anthnydas.com/commit/${commit}`}>{commit}</a>
+              </>
+            )}
           </li>
         </ul>
       </li>
