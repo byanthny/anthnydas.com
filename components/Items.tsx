@@ -1,22 +1,14 @@
 import type { CSSProperties } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { getAllEntries, getEntriesByProject } from '@/lib/log'
 import EntryLink from './EntryLink'
 import Mortarboard from './Mortarboard'
 import ProjectPeek from './ProjectPeek'
+import ShortLink from './ShortLink'
 import WorkPreview from './WorkPreview'
 
 // a project's own icon as its bullet (.icon-bullet in globals.css). only marks i own
 const icon = (src: string) => ({ '--icon': `url(${src})` }) as CSSProperties
-
-// 88x31 buttons for my sites, old-web style. the first one is for anyone linking here
-const buttons = [
-  { src: '/buttons/anthnydas.svg', href: '/', alt: 'anthnydas.com' },
-  { src: '/buttons/learning.svg', href: 'https://learning.anthnydas.com', alt: 'learning.anthnydas.com' },
-  { src: '/buttons/shrimpshack.svg', href: 'https://www.tonysshrimpshack.com', alt: "tony's shrimp shack" },
-  { src: '/buttons/yugo.svg', href: 'https://yugo-theme.vercel.app', alt: 'yugo, a hugo theme' },
-]
 
 const Items = async () => {
   const recent = getAllEntries().slice(0, 3)
@@ -41,15 +33,15 @@ const Items = async () => {
           <li>
             b.s. in computer science from{" "}
             <span className="jhu">
-              <a href="https://jhu.edu">jhu</a>
+              <ShortLink href="https://jhu.edu">jhu</ShortLink>
               <Mortarboard />
             </span>
           </li>
           <li>
-            <a href="/resume.pdf">resume</a> &middot;{" "}
-            <a href="mailto:me@anthnydas.com">email</a> &middot;{" "}
-            <a href="https://github.com/byanthny/">github</a> &middot;{" "}
-            <a href="https://www.linkedin.com/in/byanthny/">linkedin</a>
+            <ShortLink href="/resume.pdf">resume</ShortLink> &middot;{" "}
+            <ShortLink href="mailto:me@anthnydas.com">email</ShortLink> &middot;{" "}
+            <ShortLink href="https://github.com/byanthny/">github</ShortLink> &middot;{" "}
+            <ShortLink href="https://www.linkedin.com/in/byanthny/">linkedin</ShortLink>
           </li>
         </ul>
       </li>
@@ -61,7 +53,7 @@ const Items = async () => {
             <ul>
               <li>
                 {/* link it once the stow repo is public (add href to the peek) */}
-                <ProjectPeek label="stow" art="stow" /> [soon]: a small native
+                <ProjectPeek label="stow" drawing="stow" /> [soon]: a small native
                 macos board for markdown notes and github pull requests
                 <ul>
                   <li>swift, appkit, swiftui</li>
@@ -71,7 +63,7 @@ const Items = async () => {
                 <ProjectPeek
                   href="https://learning.anthnydas.com"
                   label="learning.anthnydas.com"
-                  art="learning"
+                  shot="/projects/learning.jpg"
                 />
                 : visual notes on algorithms, graphics, and the tools i use
                 <ul>
@@ -92,7 +84,7 @@ const Items = async () => {
                 <ProjectPeek
                   href="https://github.com/byanthny/macropad-rp2040"
                   label="rp2040 macropad"
-                  art="macropad"
+                  drawing="macropad"
                 />
                 : adafruit rp2040 macropad kit programmed with rust
                 <ul>
@@ -114,11 +106,11 @@ const Items = async () => {
           <li>
             <em>my random websites:</em>
             <ul>
-              <li className="icon-bullet" style={icon('/icons/shrimpshack.svg')}>
+              <li>
                 <ProjectPeek
                   href="https://www.tonysshrimpshack.com"
                   label="tonysshrimpshack.com"
-                  art="shrimp"
+                  shot="/projects/shrimpshack.jpg"
                 />
                 : a website to show off my shrimp tank
               </li>
@@ -128,18 +120,23 @@ const Items = async () => {
             <em>maintaining:</em>
             <ul>
               <li>
-                <ProjectPeek href="https://github.com/byanthny/yugo" label="yugo" art="yugo" />
+                <ProjectPeek
+                  href="https://github.com/byanthny/yugo"
+                  label="yugo"
+                  shot="/projects/yugo.jpg"
+                  site="https://yugo-theme.vercel.app"
+                />
                 : basic hugo theme
                 <ul>
                   <li>your go to hugo theme</li>
                   <li>
                     v1.0.2, maintenance mode &middot;{" "}
-                    <a href="https://yugo-theme.vercel.app">demo</a>
+                    <ShortLink href="https://yugo-theme.vercel.app">demo</ShortLink>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="https://github.com/byanthny/.dotfiles">.dotfiles</a>:
+                <ShortLink href="https://github.com/byanthny/.dotfiles">.dotfiles</ShortLink>:
                 my dotfiles
               </li>
             </ul>
@@ -152,15 +149,15 @@ const Items = async () => {
               <ul>
                 <li>
                   2022 -{" "}
-                  <a href="https://gitlab.com/JonoAugustine/on-it">on-it</a>:
+                  <ShortLink href="https://gitlab.com/JonoAugustine/on-it">on-it</ShortLink>:
                   minimal note taking and to-do web application
                   <ul>
                     <li>but overly &apos;complicated&apos; ui</li>
                     <li>node, react, sass, typescript, mongoDB</li>
                     <li>
-                      <a href="https://gitlab.com/JonoAugustine/on-it/-/graphs/master">
+                      <ShortLink href="https://gitlab.com/JonoAugustine/on-it/-/graphs/master">
                         members
-                      </a>
+                      </ShortLink>
                     </li>
                   </ul>
                 </li>
@@ -182,15 +179,15 @@ const Items = async () => {
                 </li>
                 <li>
                   2021 -{" "}
-                  <a href="https://github.com/sf11047/anime-db">anime-db</a>: an
+                  <ShortLink href="https://github.com/sf11047/anime-db">anime-db</ShortLink>: an
                   database of anime data and site for analysis
                   <ul>
                     <li>class project from uni</li>
                     <li>php, mySQL</li>
                     <li>
-                      <a href="https://github.com/sf11047/anime-db/graphs/contributors">
+                      <ShortLink href="https://github.com/sf11047/anime-db/graphs/contributors">
                         members
-                      </a>
+                      </ShortLink>
                     </li>
                   </ul>
                 </li>
@@ -223,19 +220,19 @@ const Items = async () => {
                   </ul>
                 </li>
                 <li>
-                  2019 - <a href="https://github.com/byanthny/Ouch">ouch</a>: a
+                  2019 - <ShortLink href="https://github.com/byanthny/Ouch">ouch</ShortLink>: a
                   simulation where you and your friends can exist in an existence
                   together
                   <ul>
                     <li>over complicated messaging rooms</li>
                     <li>javascript, less, html</li>
                     <li>
-                      <a href="https://github.com/JonoAugustine">members</a>
+                      <ShortLink href="https://github.com/JonoAugustine">members</ShortLink>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  2019 - <a href="https://github.com/byanthny/Athena">athena</a>{" "}
+                  2019 - <ShortLink href="https://github.com/byanthny/Athena">athena</ShortLink>{" "}
                   [unfinished]: a modern css framework
                   <ul>
                     <li>
@@ -247,9 +244,9 @@ const Items = async () => {
                 </li>
                 <li>
                   2018 -{" "}
-                  <a href="https://www.youtube.com/watch?v=DPesVSQQUqY">
+                  <ShortLink href="https://www.youtube.com/watch?v=DPesVSQQUqY">
                     leadingedge labs &amp; r3d
-                  </a>
+                  </ShortLink>
                   : game based therapy for custom 3-D printed myoelectric
                   prosthetics + project website
                   <ul>
@@ -269,7 +266,7 @@ const Items = async () => {
             <em>current:</em>
             <ul>
               <li className="icon-bullet" style={icon('/icons/pinkilo.png')}>
-                <a href="https://pinkilo.com">pinkilo</a>:
+                <ShortLink href="https://pinkilo.com">pinkilo</ShortLink>:
                 <ul>
                   <li>ambition, digitally crafted.</li>
                   <li>
@@ -277,12 +274,12 @@ const Items = async () => {
                     IT architecture.
                   </li>
                   <li className="icon-bullet" style={icon('/icons/aquaridex.png')}>
-                    <a href="https://www.aquaridex.com">aquaridex</a>: explore
+                    <ShortLink href="https://www.aquaridex.com">aquaridex</ShortLink>: explore
                     and manage aquatic animal collections, with species
                     profiles, care guides and water parameters
                   </li>
                   <li className="icon-bullet" style={icon('/icons/masteryaquaria.svg')}>
-                    <a href="https://www.masteryaquaria.com">mastery aquaria</a>
+                    <ShortLink href="https://www.masteryaquaria.com">mastery aquaria</ShortLink>
                     : field-grown botanicals, shrimp-safe goods and a species
                     reference
                   </li>
@@ -294,7 +291,7 @@ const Items = async () => {
             <em>past:</em>
             <ul>
               <li>
-                <a href="https://etp.net">Entertainment Technology Partners</a>
+                <ShortLink href="https://etp.net">Entertainment Technology Partners</ShortLink>
                 : web developer
                 <ul>
                   <li>
@@ -305,7 +302,7 @@ const Items = async () => {
                     computer vision, ai & edge devices
                     <ul>
                       <li>
-                        <a href="https://www.knw.net">knw.net</a>: audience
+                        <ShortLink href="https://www.knw.net">knw.net</ShortLink>: audience
                         intelligence for live events. the dashboard is still
                         mostly my work; the public site isn&apos;t my design
                         anymore
@@ -362,27 +359,17 @@ const Items = async () => {
         site info
         <ul>
           <li>
-            <a href="https://github.com/byanthny/anthnydas.com">github repo</a>
+            <ShortLink href="https://github.com/byanthny/anthnydas.com">github repo</ShortLink>
           </li>
           <li>
-            built with <a href="https://vercel.com/">Next.js & Vercel</a>.
-          </li>
-          <li>
-            88&times;31s for my sites (hotlink mine if you want):
-            <span className="flex flex-wrap gap-2 pb-1 pt-2">
-              {buttons.map((button) => (
-                <a key={button.src} href={button.href} className="plain">
-                  <Image src={button.src} alt={button.alt} width={88} height={31} unoptimized />
-                </a>
-              ))}
-            </span>
+            built with <ShortLink href="https://vercel.com/">Next.js & Vercel</ShortLink>.
           </li>
           <li className="text-neutral-400">
             last updated {updated}
             {commit && (
               <>
                 {" "}&middot;{" "}
-                <a href={`https://github.com/byanthny/anthnydas.com/commit/${commit}`}>{commit}</a>
+                <ShortLink href={`https://github.com/byanthny/anthnydas.com/commit/${commit}`}>{commit}</ShortLink>
               </>
             )}
           </li>

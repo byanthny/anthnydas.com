@@ -56,9 +56,8 @@ details[open] > ul {
   }
 }
 
-/* links in the site's lists: a cyan underline draws in on hover or focus, and links that
-   leave the site show a small arrow. .plain opts a link out (the 88x31 buttons) */
-.site-list a:not(.heading):not(.plain) {
+/* links in the site's lists: a cyan underline draws in on hover or focus */
+.site-list a:not(.heading) {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -67,15 +66,19 @@ details[open] > ul {
   box-decoration-break: clone;
   transition: background-size 200ms var(--ease-out);
 }
-.site-list a:not(.heading):not(.plain):hover,
-.site-list a:not(.heading):not(.plain):focus-visible {
+.site-list a:not(.heading):hover,
+.site-list a:not(.heading):focus-visible {
   background-size: 100% 1px;
   text-decoration-line: none;
 }
-.site-list a[href^="http"]:not(.plain) {
+.site-list a[href^="http"],
+.site-list a[data-url] {
   position: relative;
 }
-.site-list a[href^="http"]:not(.plain)::after {
+
+/* links that leave the site show a small grey arrow, like learning's nav. grey, so it doesn't
+   get lost in the cyan */
+.site-list a[href^="http"]::after {
   content: "\2197";
   content: "\2197" / "";
   position: absolute;
@@ -83,6 +86,7 @@ details[open] > ul {
   right: -0.66em;
   font-size: 0.62em;
   line-height: 1;
+  color: theme("colors.neutral.300");
   opacity: 0;
   pointer-events: none;
   transform: translate(-3px, 3px);
@@ -90,18 +94,61 @@ details[open] > ul {
     opacity 150ms,
     transform 200ms var(--ease-out);
 }
-.site-list a[href^="http"]:not(.plain):hover::after,
-.site-list a[href^="http"]:not(.plain):focus-visible::after {
+.site-list a[href^="http"]:hover::after,
+.site-list a[href^="http"]:focus-visible::after {
   opacity: 1;
   transform: none;
 }
+/* the mortarboard sits right after "jhu", so that link goes without the arrow */
+.site-list .jhu a::after {
+  content: none;
+}
 
-/* the bullet of the item under the cursor turns cyan */
+/* a ShortLink shows where it goes in a chip under it. the chip only exists while the link is
+   hovered (on screens that can hover) or focused, so a long url never widens the page */
+.site-list a[data-url]::before {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 30;
+  padding: 1px 6px;
+  border: 1px solid rgb(64 64 64 / 0.5);
+  border-radius: 4px;
+  background: rgb(23 23 23 / 0.95);
+  font: 12px/18px theme("fontFamily.mono");
+  color: theme("colors.neutral.400");
+  white-space: nowrap;
+  pointer-events: none;
+  animation: chip-in 150ms var(--ease-out);
+}
+@media (hover: hover) {
+  .site-list a[data-url]:hover::before {
+    content: attr(data-url);
+    content: attr(data-url) / "";
+  }
+}
+.site-list a[data-url]:focus-visible::before {
+  content: attr(data-url);
+  content: attr(data-url) / "";
+}
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* the bullet of the item under the cursor turns amber. not cyan, which would get lost among
+   the links */
 .site-list li::marker {
   transition: color 150ms;
 }
 .site-list li:hover:not(:has(li:hover))::marker {
-  color: theme("colors.cyan.400");
+  color: theme("colors.amber.400");
 }
 
 /* your own projects' icons as their bullets (set --icon on the li). only marks you own */
@@ -120,59 +167,8 @@ details[open] > ul {
   background: var(--icon) center / contain no-repeat;
 }
 
-/* the nav: the cyan dot pulses once when the site opens and again on hover, and the name's
-   letters lift one after another */
-.nav-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 8px;
-  border-radius: 9999px;
-  background: theme("colors.cyan.400");
-  vertical-align: middle;
-  animation: dot-pulse 1200ms var(--ease-out);
-}
-/* the same pulse under a second name, so hovering starts it over */
-.nav-name:hover .nav-dot {
-  animation: dot-pulse-again 900ms var(--ease-out);
-}
-@keyframes dot-pulse {
-  from {
-    box-shadow: 0 0 0 0 rgb(34 211 238 / 0.55);
-  }
-  to {
-    box-shadow: 0 0 0 8px rgb(34 211 238 / 0);
-  }
-}
-@keyframes dot-pulse-again {
-  from {
-    box-shadow: 0 0 0 0 rgb(34 211 238 / 0.55);
-  }
-  to {
-    box-shadow: 0 0 0 8px rgb(34 211 238 / 0);
-  }
-}
-.wave > span {
-  display: inline-block;
-}
-@media (hover: hover) {
-  .nav-name:hover .wave > span {
-    animation: wave 500ms ease-in-out;
-    animation-delay: calc(var(--i) * 28ms);
-  }
-}
-@keyframes wave {
-  0%,
-  100% {
-    transform: none;
-  }
-  40% {
-    transform: translateY(-3px);
-  }
-}
-
-/* the mortarboard after "jhu" tosses when the link is hovered or focused. it stays on the
-   link's line, and leaves room for the link's arrow where hovering happens */
+/* the mortarboard right after "jhu", on the link's line. it tosses when the link is hovered
+   or focused */
 .jhu {
   white-space: nowrap;
 }
@@ -180,14 +176,9 @@ details[open] > ul {
   display: inline-block;
   width: 15px;
   height: 12px;
-  margin-left: 5px;
+  margin-left: 4px;
   vertical-align: -1px;
   color: theme("colors.neutral.400");
-}
-@media (hover: hover) {
-  .jhu .cap {
-    margin-left: 11px;
-  }
 }
 .jhu:hover .cap,
 .jhu:focus-within .cap {

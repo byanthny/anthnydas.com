@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31">
-  <rect width="88" height="31" fill="#000000"/>
-  <path d="M.5 30.5V.5h87" fill="none" stroke="#a3a3a3"/>
-  <path d="M1 30.5h86.5V1" fill="none" stroke="#404040"/>
-  <circle cx="11" cy="15.5" r="3.6" fill="#22d3ee"/>
-  <text x="19" y="15" font-family="Verdana, Tahoma, sans-serif" font-size="9" font-weight="700" fill="#ffffff">anthnydas</text>
-  <text x="19" y="24.5" font-family="Verdana, Tahoma, sans-serif" font-size="7.5" fill="#22d3ee">.com</text>
-</svg>

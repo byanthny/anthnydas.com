@@ -1,30 +1,26 @@
 import HoverCard from './HoverCard'
-import LearningArt from './peeks/LearningArt'
 import MacropadArt from './peeks/MacropadArt'
-import ShrimpArt from './peeks/ShrimpArt'
+import SiteCard from './peeks/SiteCard'
 import StowArt from './peeks/StowArt'
-import YugoArt from './peeks/YugoArt'
 
-const arts = {
+const drawings = {
   stow: StowArt,
-  learning: LearningArt,
   macropad: MacropadArt,
-  shrimp: ShrimpArt,
-  yugo: YugoArt,
 }
 
-type Props = {
-  label: string
-  // no link yet (stow, until its repo is public): the card hangs off the word, which gets a
-  // dotted underline where the card can show
-  href?: string
-  art: keyof typeof arts
-}
+type Props =
+  // a project with a site shows the site: a screenshot of its homepage in public/projects.
+  // site is the address the shot is of, when the link goes elsewhere (yugo: repo vs demo)
+  | { label: string; href: string; shot: string; site?: string }
+  // one without a site gets a drawing: the macropad, and stow until it launches. no link yet
+  // (stow, until its repo is public) puts the card on the word, which gets a dotted underline
+  // where the card can show
+  | { label: string; href?: string; drawing: keyof typeof drawings }
 
-// a project with a small drawn loop on hover: the card WorkPreview uses, with a moment from
-// the project instead of screenshots. the loop only runs while the card is open
-const ProjectPeek = ({ label, href, art }: Props) => {
-  const Art = arts[art]
+// a project with a card on hover: the card WorkPreview uses, showing the project's site, or a
+// drawing of it when it has none
+const ProjectPeek = (props: Props) => {
+  const { label, href } = props
   const trigger = href ? (
     <a href={href}>{label}</a>
   ) : (
@@ -32,10 +28,15 @@ const ProjectPeek = ({ label, href, art }: Props) => {
       {label}
     </span>
   )
+  const Drawing = 'drawing' in props ? drawings[props.drawing] : null
 
   return (
     <HoverCard trigger={trigger}>
-      <Art />
+      {'shot' in props ? (
+        <SiteCard href={props.site ?? props.href} shot={props.shot} />
+      ) : (
+        Drawing && <Drawing />
+      )}
     </HoverCard>
   )
 }
