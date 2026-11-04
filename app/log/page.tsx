@@ -22,7 +22,7 @@ export default async function LogPage() {
   return (
     <>
       <h1 className="sr-only">Log</h1>
-      <ul className="list-disc">
+      <ul className="list-disc site-list">
         {entries.map((entry) => (
           <EntryLink key={entry.slug} entry={entry} />
         ))}
