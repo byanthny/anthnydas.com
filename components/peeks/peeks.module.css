@@ -1,0 +1,442 @@
+/* the drawn loops inside the project peeks (components/ProjectPeek.tsx). each is a 240x135
+   frame, like the work screenshots, and its animations wait until the card is open */
+.art {
+  position: relative;
+  display: block;
+  width: 240px;
+  height: 135px;
+  overflow: hidden;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 0.25rem;
+  background: theme("colors.neutral.950");
+}
+.art * {
+  animation-play-state: paused !important;
+}
+:global(.group):hover .art *,
+:global(.group):focus-within .art * {
+  animation-play-state: running !important;
+}
+.tag {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  font: 10px/1 theme("fontFamily.mono");
+  color: theme("colors.neutral.500");
+}
+
+/* stow: a note lands, a pull request merges */
+.win {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 17px;
+  padding: 0 7px;
+  border-bottom: 1px solid theme("colors.neutral.800");
+}
+.win i {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: theme("colors.neutral.700");
+}
+.win span {
+  margin-left: auto;
+  font: 9px/1 theme("fontFamily.mono");
+  color: theme("colors.neutral.500");
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  padding: 7px;
+}
+.cols b {
+  display: block;
+  margin-bottom: 5px;
+  font: 600 9px/1 theme("fontFamily.sans");
+  color: theme("colors.neutral.500");
+}
+.card {
+  display: block;
+  margin-bottom: 5px;
+  padding: 6px;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 4px;
+  background: theme("colors.neutral.900");
+}
+.heading {
+  display: block;
+  width: 58%;
+  height: 5px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  background: theme("colors.neutral.300");
+}
+.line {
+  display: block;
+  width: 86%;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 2px;
+  background: theme("colors.neutral.700");
+}
+.short {
+  width: 58%;
+}
+.typing {
+  animation: typing 4.4s steps(14) -3s infinite;
+}
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  45%,
+  100% {
+    width: 86%;
+  }
+}
+.landing {
+  animation: landing 4.4s ease-out -3s infinite;
+}
+@keyframes landing {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  14%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pr .line {
+  margin-top: 0;
+}
+.state {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid theme("colors.cyan.400");
+  border-radius: 9999px;
+}
+.merging {
+  animation: merging 4.4s -3s infinite;
+}
+@keyframes merging {
+  0%,
+  50% {
+    background: transparent;
+  }
+  58%,
+  100% {
+    background: theme("colors.cyan.400");
+  }
+}
+
+/* learning: merge sort, drawn by LearningArt */
+.bars {
+  position: absolute;
+  inset: 12px 10px 22px;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+}
+.bars span {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  background: theme("colors.cyan.400");
+  opacity: 0.5;
+  transition: height 120ms var(--ease-out);
+}
+.bars span.hot {
+  background: theme("colors.white");
+  opacity: 1;
+}
+
+/* the macropad: twelve keys light in a wave, the knob turns */
+.pad {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+}
+.board {
+  display: block;
+  flex: none;
+  width: 80px;
+  padding: 6px;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 6px;
+  background: theme("colors.neutral.900");
+}
+.top {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.oled {
+  flex: 1;
+  height: 18px;
+  padding-left: 3px;
+  overflow: hidden;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 2px;
+  background: theme("colors.black");
+  font: 7px/16px theme("fontFamily.mono");
+  color: theme("colors.cyan.400");
+  white-space: nowrap;
+}
+.knob {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 9999px;
+  background: theme("colors.neutral.800");
+  animation: spin 6s linear infinite;
+}
+.knob::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 2px;
+  height: 6px;
+  border-radius: 1px;
+  background: theme("colors.neutral.300");
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.keys i {
+  aspect-ratio: 1;
+  border: 1px solid theme("colors.neutral.700");
+  border-radius: 3px;
+  background: theme("colors.neutral.800");
+  animation: key 2.4s ease-out infinite;
+  animation-delay: calc(var(--d) * 0.13s - 2.4s);
+}
+@keyframes key {
+  0%,
+  30%,
+  100% {
+    background: theme("colors.neutral.800");
+    box-shadow: none;
+  }
+  8% {
+    background: theme("colors.cyan.400");
+    box-shadow: 0 0 8px rgb(34 211 238 / 0.55);
+  }
+}
+.code {
+  display: block;
+  font: 9px/1.55 theme("fontFamily.mono");
+  color: theme("colors.neutral.400");
+  white-space: pre;
+}
+.code b {
+  font-weight: 400;
+  color: theme("colors.cyan.400");
+}
+
+/* the shrimp shack: a cherry shrimp patrols a planted tank */
+.tank {
+  background: linear-gradient(180deg, #07262c, #020a0c);
+}
+.gravel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  background:
+    radial-gradient(circle at 3px 3px, #5a524b 2px, transparent 2.6px) 0 0 / 7px 6px,
+    radial-gradient(circle at 3px 3px, #3b3631 2px, transparent 2.6px) 3px 3px / 7px 6px,
+    #1c1916;
+}
+.plant {
+  position: absolute;
+  bottom: 10px;
+  transform-origin: 50% 100%;
+  animation: sway 4s ease-in-out infinite;
+}
+.plantLeft {
+  left: 18px;
+}
+.plantRight {
+  right: 24px;
+  scale: 0.8;
+  animation-delay: -2s;
+}
+@keyframes sway {
+  0%,
+  100% {
+    rotate: -3deg;
+  }
+  50% {
+    rotate: 3deg;
+  }
+}
+.swim {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  animation: swim 10s ease-in-out -2.5s infinite;
+}
+.swim svg {
+  display: block;
+  width: 38px;
+  height: 23px;
+  animation: bob 1.6s ease-in-out infinite;
+}
+@keyframes swim {
+  0% {
+    transform: translateX(46px) scaleX(1);
+  }
+  44% {
+    transform: translateX(160px) scaleX(1);
+  }
+  50% {
+    transform: translateX(160px) scaleX(-1);
+  }
+  94% {
+    transform: translateX(46px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(46px) scaleX(1);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.bubble {
+  position: absolute;
+  bottom: 16px;
+  width: 4px;
+  height: 4px;
+  border: 1px solid rgb(212 212 212 / 0.55);
+  border-radius: 9999px;
+  animation: rise 3.2s linear infinite;
+}
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-112px);
+  }
+}
+
+/* yugo: markdown in, a page out */
+.yugo {
+  display: grid;
+  grid-template-columns: 1fr 14px 1fr;
+  gap: 4px;
+  padding: 10px;
+}
+.pane {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid theme("colors.neutral.800");
+  border-radius: 4px;
+  background: theme("colors.neutral.900");
+}
+.file {
+  display: block;
+  margin-bottom: 6px;
+  font: 8px/1 theme("fontFamily.mono");
+  color: theme("colors.neutral.500");
+}
+.md {
+  display: block;
+  font: 8.5px/1.6 theme("fontFamily.mono");
+  color: theme("colors.neutral.300");
+  white-space: nowrap;
+  animation: type-in 6s infinite;
+}
+.arrow {
+  align-self: center;
+  font-size: 11px;
+  color: theme("colors.neutral.500");
+  text-align: center;
+}
+.out {
+  animation: fade-in 6s infinite;
+}
+.title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: theme("colors.white");
+}
+.para {
+  display: block;
+  margin-top: 3px;
+  font-size: 9px;
+  line-height: 1.6;
+  color: theme("colors.neutral.300");
+}
+.item {
+  display: block;
+  font-size: 9px;
+  line-height: 1.5;
+  color: theme("colors.neutral.300");
+}
+.item::before {
+  content: "\2022  ";
+  color: theme("colors.neutral.500");
+}
+@keyframes type-in {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  9%,
+  86% {
+    clip-path: inset(0 0 0 0);
+  }
+  94%,
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@keyframes fade-in {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  38%,
+  86% {
+    opacity: 1;
+  }
+  94%,
+  100% {
+    opacity: 0;
+  }
+}
